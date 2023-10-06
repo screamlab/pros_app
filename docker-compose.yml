@@ -2,24 +2,26 @@ version: '3.7'
 
 services:
   yolo:
-    image: public.ecr.aws/paia-tech/pros-yolo
-    env_file:
-      - ./service1.env
+    image: public.ecr.aws/paia-tech/pros-yolo:cpu
+    # env_file:
+    #   - ./service1.env
     devices:
-      - "/dev/some_device:/dev/some_device"
+      - "/dev/video0:/dev/video0"
+      - "/dev/video1:/dev/video1"
     networks:
       - my_bridge_network
     command: "ros2 launch darknet_ros yolov7-tiny.launch.py"
 
-  camera:
-    image: public.ecr.aws/paia-tech/pros-camera
-    env_file:
-      - ./service2.env
-    devices:
-      - "/dev/another_device:/dev/another_device"
-    networks:
-      - my_bridge_network
-    command: "ros2 launch astra_camera astro_pro_plus.launch.xml"
+  # camera:
+  #   image: public.ecr.aws/paia-tech/pros-camera:latest
+  #   # env_file:
+  #   #   - ./service2.env
+  #   devices:
+  #     - "/dev/video0:/dev/video0"
+  #     - "/dev/video1:/dev/video1"
+  #   networks:
+  #     - my_bridge_network
+  #   command: "ros2 launch astra_camera astro_pro_plus.launch.xml"
 
 
   arm:
