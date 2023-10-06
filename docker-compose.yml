@@ -10,7 +10,8 @@ services:
       - "/dev/video1:/dev/video1"
     networks:
       - my_bridge_network
-    command: "ros2 launch darknet_ros yolov7-tiny.launch.py"
+    command: "bash -c 'source ./install/setup.sh && ros2 launch darknet_ros yolov7-tiny.launch.py' "
+    # command: "ls -alh"
 
   # camera:
   #   image: public.ecr.aws/paia-tech/pros-camera:latest
@@ -32,7 +33,7 @@ services:
     #   - "/dev/yet_another_device:/dev/yet_another_device"
     networks:
       - my_bridge_network
-    command: "ros2 launch pros_arm mock_arm"
+    command: "bash -c 'source ./install/setup.bash  && ros2 launch pros_arm mock_arm'"
 
 networks:
   my_bridge_network:
