@@ -1,38 +1,56 @@
 version: '3.7'
 
 services:
-  yolo:
-    image: public.ecr.aws/paia-tech/pros-yolo:cpu
-    # env_file:
-    #   - ./service1.env
+  rplidar:
+    image: public.ecr.aws/paia-tech/pros-utils:20231121
+    env_file:
+      - .env
+    environment:
+      - ROS_DOMAIN_ID
     devices:
-      - "/dev/video0:/dev/video0"
-      - "/dev/video1:/dev/video1"
+      - "/dev/ttyUSB0:/dev/ttyUSB0"
+      - "/dev/video1:/dev/ttyUSB0"
+    volumes:
+      - ./demo:/workspace/demo:ro
     networks:
       - my_bridge_network
-    command: "ros2 launch darknet_ros yolov7-tiny.launch.py"
-
-  # camera:
-  #   image: public.ecr.aws/paia-tech/pros-camera:latest
-  #   # env_file:
-  #   #   - ./service2.env
-  #   devices:
-  #     - "/dev/video0:/dev/video0"
-  #     - "/dev/video1:/dev/video1"
-  #   networks:
-  #     - my_bridge_network
-  #   command: "ros2 launch astra_camera astro_pro_plus.launch.xml"
-
-
-  arm:
-    image: public.ecr.aws/paia-tech/paia/pros
-    # env_file:
-    #   - ./service3.env
-    # devices:
-    #   - "/dev/yet_another_device:/dev/yet_another_device"
+    command: "ros2 launch ./demo/rplidar.xml"
+  
+  slam:
+    image: public.ecr.aws/paia-tech/pros-utils:20231121
+    env_file:
+      - .env
+    environment:
+      - ROS_DOMAIN_ID
+    volumes:
+      - ./demo:/workspace/demo:ro
     networks:
       - my_bridge_network
-    command: "ros2 launch pros_arm mock_arm"
+    command: "ros2 launch ./demo/slam.xml"
+  
+  localization:
+    image: public.ecr.aws/paia-tech/pros-utils:20231121
+    env_file:
+      - .env
+    environment:
+      - ROS_DOMAIN_ID
+    volumes:
+      - ./demo:/workspace/demo:ro
+    networks:
+      - my_bridge_network
+    command: "ros2 launch ./demo/localization.xml"
+  
+  camera:
+    image: public.ecr.aws/paia-tech/pros-camera:20231122
+    env_file:
+      - .env
+    environment:
+      - ROS_DOMAIN_ID
+
+    networks:
+      - my_bridge_network
+    command: "ros2 launch astra_camera astro_pro_plus.launch.xml"
+
 
 networks:
   my_bridge_network:
