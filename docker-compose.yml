@@ -51,7 +51,6 @@ services:
       - my_bridge_network
     command: "ros2 launch astra_camera astro_pro_plus.launch.xml"
 
-
 networks:
   my_bridge_network:
     driver: bridge
