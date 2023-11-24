@@ -1,0 +1,18 @@
+version: '3.7'
+
+services:
+  map:
+    image: public.ecr.aws/paia-tech/pros-utils:20231121
+    env_file:
+      - .env
+    environment:
+      - ROS_DOMAIN_ID
+    volumes:
+      - ./demo/map/map01:/map
+    networks:
+      - my_bridge_network
+    command: "ros2 run nav2_map_server map_server_cli -f /map/map01"
+
+networks:
+  my_bridge_network:
+    driver: bridge

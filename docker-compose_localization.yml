@@ -8,26 +8,13 @@ services:
     environment:
       - ROS_DOMAIN_ID
     devices:
-      - "/dev/ttyUSB0:/dev/ttyUSB0"
-      - "/dev/ttyUSB1:/dev/ttyUSB1"
+      - "/dev/usb_lidar:/dev/usb_lidar"
     # privileged: true
     volumes:
       - ./demo:/workspace/demo:ro
     networks:
       - my_bridge_network
     command: "ros2 launch /workspace/demo/rplidar.xml"
-
-  slam:
-    image: public.ecr.aws/paia-tech/pros-utils:20231121
-    env_file:
-      - .env
-    environment:
-      - ROS_DOMAIN_ID
-    volumes:
-      - ./demo:/workspace/demo:ro
-    networks:
-      - my_bridge_network
-    command: "ros2 launch /workspace/demo/slam.xml"
 
   localization:
     image: public.ecr.aws/paia-tech/pros-utils:20231121
@@ -40,19 +27,6 @@ services:
     networks:
       - my_bridge_network
     command: "ros2 launch /workspace/demo/localization.xml"
-
-  camera:
-    image: public.ecr.aws/paia-tech/pros-camera:20231122
-    env_file:
-      - .env
-    environment:
-      - ROS_DOMAIN_ID
-    devices:
-      - "/dev/video0:/dev/video0"
-      - "/dev/video1:/dev/video1"
-    networks:
-      - my_bridge_network
-    command: "ros2 launch astra_camera astro_pro_plus.launch.xml"
 
   rosbridge:
     image: public.ecr.aws/paia-tech/pros-camera:20231122

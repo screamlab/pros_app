@@ -1,0 +1,51 @@
+version: '3.7'
+
+services:
+  rplidar:
+    image: public.ecr.aws/paia-tech/pros-utils:20231121
+    env_file:
+      - .env
+    environment:
+      - ROS_DOMAIN_ID
+    devices:
+      - "/dev/usb_lidar:/dev/usb_lidar"
+    # privileged: true
+    volumes:
+      - ./demo:/workspace/demo:ro
+    networks:
+      - my_bridge_network
+    command: "ros2 launch /workspace/demo/rplidar.xml"
+
+  slam:
+    image: public.ecr.aws/paia-tech/pros-utils:20231121
+    env_file:
+      - .env
+    environment:
+      - ROS_DOMAIN_ID
+    volumes:
+      - ./demo:/workspace/demo:ro
+    networks:
+      - my_bridge_network
+    depends_on:
+      - rplidar
+    command: "ros2 launch /workspace/demo/slam.xml"
+
+  rosbridge:
+    image: public.ecr.aws/paia-tech/pros-camera:20231122
+    env_file:
+      - .env
+    environment:
+      - ROS_DOMAIN_ID
+
+    # set bridge to host 
+    # network_mode: host
+    # or export a port 
+    networks:
+      - my_bridge_network
+    ports:
+      - 9090:9090
+    command: " ros2 launch rosbridge_server rosbridge_websocket_launch.xml"
+
+networks:
+  my_bridge_network:
+    driver: bridge
