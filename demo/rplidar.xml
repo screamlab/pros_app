@@ -6,7 +6,7 @@
     -->
     <node name="rplidar" pkg="rplidar_ros" exec="rplidar_node" output="screen">
         <!-- TODO -->
-        <param name="serial_port" value="/dev/ttyUSB0"/>
+        <param name="serial_port" value="/dev/usb_lidar"/>
         <param name="serial_baudrate" value="256000"/>
         <param name="frame_id" value="laser"/>
         <param name="inverted" value="false"/>
