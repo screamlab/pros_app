@@ -16,7 +16,7 @@ services:
     networks:
       - my_bridge_network
     command: "ros2 launch /workspace/demo/rplidar.xml"
-  
+
   slam:
     image: public.ecr.aws/paia-tech/pros-utils:20231121
     env_file:
@@ -28,7 +28,7 @@ services:
     networks:
       - my_bridge_network
     command: "ros2 launch /workspace/demo/slam.xml"
-  
+
   localization:
     image: public.ecr.aws/paia-tech/pros-utils:20231121
     env_file:
@@ -40,7 +40,7 @@ services:
     networks:
       - my_bridge_network
     command: "ros2 launch /workspace/demo/localization.xml"
-  
+
   camera:
     image: public.ecr.aws/paia-tech/pros-camera:20231122
     env_file:
@@ -53,6 +53,7 @@ services:
     networks:
       - my_bridge_network
     command: "ros2 launch astra_camera astro_pro_plus.launch.xml"
+
   rosbridge:
     image: public.ecr.aws/paia-tech/pros-camera:20231122
     env_file:
@@ -68,6 +69,7 @@ services:
     ports:
       - 9090:9090
     command: " ros2 launch rosbridge_server rosbridge_websocket_launch.xml"
+
 networks:
   my_bridge_network:
     driver: bridge
