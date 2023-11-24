@@ -1,4 +1,3 @@
-
 <launch>
     <!-- 
         啟動 rplidar 並執行 SLAM
@@ -17,5 +16,5 @@
         <arg name="slam_params_file" value="$(var slam_params_file_path)"/>
     </include>
 
-    
+
 </launch>
