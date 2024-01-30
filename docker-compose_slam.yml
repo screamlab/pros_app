@@ -5,8 +5,8 @@ services:
     image: public.ecr.aws/paia-tech/pros-utils:20231121
     env_file:
       - .env
-    environment:
-      - ROS_DOMAIN_ID
+    # environment:
+    #   - ROS_DOMAIN_ID
     devices:
       - "/dev/usb_lidar:/dev/usb_lidar"
     # privileged: true
@@ -20,8 +20,8 @@ services:
     image: public.ecr.aws/paia-tech/pros-utils:20231121
     env_file:
       - .env
-    environment:
-      - ROS_DOMAIN_ID
+    # environment:
+    #   - ROS_DOMAIN_ID
     volumes:
       - ./demo:/workspace/demo:ro
     networks:
@@ -34,8 +34,8 @@ services:
     image: public.ecr.aws/paia-tech/pros-camera:20231122
     env_file:
       - .env
-    environment:
-      - ROS_DOMAIN_ID
+    # environment:
+    #   - ROS_DOMAIN_ID
 
     # set bridge to host 
     # network_mode: host

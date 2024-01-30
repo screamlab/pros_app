@@ -5,11 +5,11 @@ services:
     image: public.ecr.aws/paia-tech/pros-camera:20231122
     env_file:
       - .env
-    environment:
-      - ROS_DOMAIN_ID
-#    devices:
-#      - "/dev/video0:/dev/video0"
-#      - "/dev/video1:/dev/video1"
+    # environment:
+    #   - ROS_DOMAIN_ID
+    # devices:
+    #   - "/dev/video0:/dev/video0"
+    #   - "/dev/video1:/dev/video1"
     privileged: true
     networks:
       - my_bridge_network

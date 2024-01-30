@@ -5,8 +5,8 @@ services:
     image: public.ecr.aws/paia-tech/pros-utils:20231121
     env_file:
       - .env
-    environment:
-      - ROS_DOMAIN_ID
+    # environment:
+    #   - ROS_DOMAIN_ID
     volumes:
       - ./demo/map/map01:/map
     networks:
