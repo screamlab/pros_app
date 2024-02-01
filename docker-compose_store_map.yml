@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   map:
-    image: public.ecr.aws/paia-tech/pros-utils:20231121
+    image: ghcr.io/otischung/pros_ai_image:latest
     env_file:
       - .env
     # environment:

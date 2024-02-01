@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   rplidar:
-    image: public.ecr.aws/paia-tech/pros-utils:20231121
+    image: ghcr.io/otischung/pros_ai_image:latest
     env_file:
       - .env
     # environment:
@@ -17,7 +17,7 @@ services:
     command: "ros2 launch /workspace/demo/rplidar.xml"
 
   localization:
-    image: public.ecr.aws/paia-tech/pros-utils:20231121
+    image: ghcr.io/otischung/pros_ai_image:latest
     env_file:
       - .env
     # environment:
@@ -29,7 +29,7 @@ services:
     command: "ros2 launch /workspace/demo/localization.xml"
 
   rosbridge:
-    image: public.ecr.aws/paia-tech/pros-camera:20231122
+    image: ghcr.io/otischung/pros_ai_image:latest
     env_file:
       - .env
     # environment:

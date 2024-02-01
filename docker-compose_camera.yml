@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   camera:
-    image: public.ecr.aws/paia-tech/pros-camera:20231122
+    image: ghcr.io/otischung/pros_ai_image:latest
     env_file:
       - .env
     # environment:
@@ -16,7 +16,7 @@ services:
     command: "ros2 launch astra_camera astro_pro_plus.launch.xml"
 
   rosbridge:
-    image: public.ecr.aws/paia-tech/pros-camera:20231122
+    image: ghcr.io/otischung/pros_ai_image:latest
     env_file:
       - .env
     environment:
