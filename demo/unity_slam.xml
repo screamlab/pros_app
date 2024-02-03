@@ -3,8 +3,8 @@
         發布TF from base_footprint to laser 
         使用ros2_laser_scan_matcher 發布TF from odom to base_footprint
     -->
-    <node pkg="unity_lidar_transformer" exec="lidar_value" name="unity_lidar_value" output="screen">
-    </node>
+    <!-- <node pkg="unity_lidar_transformer" exec="lidar_value" name="unity_lidar_value" output="screen">
+    </node> -->
 
     <node pkg="tf2_ros" exec="static_transform_publisher" name="base_to_laser_tf"
           args="0.0 0.0 0.15 3.14 0.0 0.0 base_footprint laser"/>

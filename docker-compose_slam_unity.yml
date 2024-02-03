@@ -10,7 +10,7 @@ services:
     # privileged: true
     volumes:
       - ./demo:/workspace/demo:ro
-      - ./src/unity_lidar_transformer/:/workspaces/src/unity_lidar_transformer/:ro
+      # - ./src/unity_lidar_transformer/:/workspaces/src/unity_lidar_transformer/:ro
     networks:
       - my_bridge_network
     command: "ros2 launch /workspace/demo/unity_slam.xml"
