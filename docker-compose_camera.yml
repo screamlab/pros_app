@@ -7,9 +7,9 @@ services:
       - .env
     # environment:
     #   - ROS_DOMAIN_ID
-    # devices:
-    #   - "/dev/video0:/dev/video0"
-    #   - "/dev/video1:/dev/video1"
+    devices:
+      - "/dev/video0:/dev/video0"
+      - "/dev/video1:/dev/video1"
     privileged: true
     networks:
       - my_bridge_network
