@@ -125,3 +125,23 @@ docker-compose -f <your-compose-file.yml> up
 
    [https://inegm.medium.com/persistent-names-for-usb-serial-devices-in-linux-dev-ttyusbx-dev-custom-name-fd49b5db9af1](https://inegm.medium.com/persistent-names-for-usb-serial-devices-in-linux-dev-ttyusbx-dev-custom-name-fd49b5db9af1)
 
+
+
+## Docker Bridge Network (doc written at 2024.02.29)
+
+使用 port 對應會造成網路嚴重延遲，為了解決這個問題，我們新增了自定義的 [bridge network](https://godleon.github.io/blog/Docker/docker-network-bridge/)
+
+```yaml
+networks:
+  my_bridge_network:
+    driver: bridge
+```
+
+執行時，若機器上的 docker 原本沒有 `pros_app_my_bridge_network`，則會自動新增
+
+若是需要在執行 docker-compose 前就先行使用此 bridge network，亦可自行新增
+
+```bash
+docker network create --driver bridge pros_app_my_bridge_network
+```
+
