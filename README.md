@@ -145,3 +145,14 @@ networks:
 docker network create --driver bridge pros_app_my_bridge_network
 ```
 
+
+
+## ROS2 Image Transport Plugins
+
+我們使用了 `ros-humble-image-transport-plugins ros-humble-theora-image-transport ros-humble-compressed-depth-image-transport ros-humble-compressed-image-transport` 來實現影像壓縮，這些可以從 `apt` 進行安裝
+
+原本傳送 640\*480@30Hz 的原始影像，有 640\*480\*30Hz\*8bits\*3channels/1024/1024 = 210.9375 Mbps，經由影像壓縮之後，已經成功壓到 24~32Mbps 左右，壓縮率為驚人的 15.17%
+
+在 Linux 系統中，可以使用 `bmon` 得知網路頻寬流量
+
+這個 node 是讀取 `/camera` 的 topic，經處理後 redirect 到 `/out` 這個新的 topic，使用者只須從 rviz 或 foxglove 選取壓縮之後的 topic 即可

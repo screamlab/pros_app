@@ -29,7 +29,17 @@ services:
       - my_bridge_network
     ports:
       - 9090:9090
-    command: " ros2 launch rosbridge_server rosbridge_websocket_launch.xml"
+    command: "ros2 launch rosbridge_server rosbridge_websocket_launch.xml"
+  
+  compress:
+    image: ghcr.io/otischung/pros_ai_image:latest
+    env_file:
+      - .env
+    networks:
+      - my_bridge_network
+    depends_on:
+      - camera
+    command: "ros2 run image_transport republish raw --ros-args --remap in:=camera/color/image_raw -p out:=camera/compressed"
 
 # This will create a docker bridge network
 # docker network create --driver bridge pros_app_my_bridge_network
