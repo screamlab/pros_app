@@ -1,0 +1,50 @@
+version: '3.7'
+
+services:
+  rplidar:
+    image: ghcr.io/otischung/pros_ai_image:latest
+    env_file:
+      - .env
+    # environment:
+    #   - ROS_DOMAIN_ID
+    # privileged: true
+    volumes:
+      - ./demo:/workspace/demo:ro
+    networks:
+      - my_bridge_network
+    command: "ros2 launch /workspace/demo/rplidar_unity.xml"
+
+  localization:
+    image: ghcr.io/otischung/pros_ai_image:latest
+    env_file:
+      - .env
+    # environment:
+    #   - ROS_DOMAIN_ID
+    volumes:
+      - ./demo:/workspace/demo:ro
+    networks:
+      - my_bridge_network
+    command: "ros2 launch /workspace/demo/localization_unity.xml"
+
+  rosbridge:
+    image: ghcr.io/otischung/pros_ai_image:latest
+    env_file:
+      - .env
+    # environment:
+    #   - ROS_DOMAIN_ID
+
+    # set bridge to host
+    # network_mode: host
+    # or export a port
+    networks:
+      - my_bridge_network
+    ports:
+      - 9090:9090
+    command: " ros2 launch rosbridge_server rosbridge_websocket_launch.xml"
+
+# This will create a docker bridge network
+# docker network create --driver bridge pros_app_my_bridge_network
+# You can see the network by docker network ls
+networks:
+  my_bridge_network:
+    driver: bridge
