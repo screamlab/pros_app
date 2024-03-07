@@ -24,6 +24,8 @@ services:
       - ./demo:/workspace/demo:ro
     networks:
       - my_bridge_network
+    depends_on:
+      - rplidar
     command: "ros2 launch /workspace/demo/localization_unity.xml"
 
   rosbridge:
