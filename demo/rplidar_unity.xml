@@ -12,5 +12,7 @@
         <param name="publish_tf" value="true"/>
         <param name="publish_odom" value="publish_odom"/>
     </node>
-
+    <!-- <node pkg="tf2_ros" exec="static_transform_publisher" name="map_to_scan_tf"
+          namespace="scan_to_map"
+          args="0 0 0 0 0 0 map scan"/> -->
 </launch>
