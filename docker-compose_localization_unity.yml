@@ -28,6 +28,17 @@ services:
       - rplidar
     command: "ros2 launch /workspace/demo/localization_unity.xml"
 
+  navigation:
+    image: ghcr.io/otischung/pros_ai_image:latest
+    env_file:
+      - .env
+    # environment:
+    #   - ROS_DOMAIN_ID
+    volumes:
+      - ./demo:/workspace/demo:ro
+    networks:
+      - my_bridge_network
+    command: "ros2 launch /workspace/demo/navigation.xml"
   rosbridge:
     image: ghcr.io/otischung/pros_ai_image:latest
     env_file:
