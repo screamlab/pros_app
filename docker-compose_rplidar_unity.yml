@@ -1,0 +1,16 @@
+version: '3.7'
+
+services:
+  rplidar:
+    image: ghcr.io/otischung/pros_ai_image:latest
+    env_file:
+      - .env
+    volumes:
+      - ./demo:/workspace/demo:ro
+    networks:
+      - my_bridge_network
+    command: "ros2 launch /workspace/demo/rplidar_unity.xml"
+
+networks:
+  my_bridge_network:
+    driver: bridge

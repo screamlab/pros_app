@@ -1,15 +1,15 @@
 version: '3.7'
 
 services:
-  rplidar:
-    image: ghcr.io/otischung/pros_ai_image:latest
-    env_file:
-      - .env
-    volumes:
-      - ./demo:/workspace/demo:ro
-    networks:
-      - my_bridge_network
-    command: "ros2 launch /workspace/demo/rplidar_unity.xml"
+  # rplidar:
+  #   image: ghcr.io/otischung/pros_ai_image:latest
+  #   env_file:
+  #     - .env
+  #   volumes:
+  #     - ./demo:/workspace/demo:ro
+  #   networks:
+  #     - my_bridge_network
+  #   command: "ros2 launch /workspace/demo/rplidar_unity.xml"
 
   slam:
     image: ghcr.io/otischung/pros_ai_image:latest
@@ -19,8 +19,8 @@ services:
       - ./demo:/workspace/demo:ro
     networks:
       - my_bridge_network
-    depends_on:
-      - rplidar
+    # depends_on:
+    #   - rplidar
     command: "ros2 launch /workspace/demo/slam.xml"
 
   rosbridge:
