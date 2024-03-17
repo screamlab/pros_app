@@ -6,14 +6,14 @@ slam_toolbox:
     ceres_preconditioner: SCHUR_JACOBI
     ceres_trust_strategy: LEVENBERG_MARQUARDT
     ceres_dogleg_type: TRADITIONAL_DOGLEG
-    ceres_loss_function: Huber #None
+    ceres_loss_function: None
 
     # ROS Parameters
     odom_frame: odom
     map_frame: map
     base_frame: base_footprint
     scan_topic: /scan
-    mode: mapping #localization
+    mode: localization #localization
 
     # if you'd like to immediately start continuing a map at a given pose
     # or at the dock, but they are mutually exclusive, if pose is given
@@ -25,25 +25,25 @@ slam_toolbox:
     debug_logging: false
     throttle_scans: 1
     transform_publish_period: 0.02 #if 0 never publishes odometry
-    map_update_interval: 5.0 #2.0
+    map_update_interval: 2.0
     resolution: 0.05
-    max_laser_range: 10.0 #for rastering images
+    max_laser_range: 12.0 #for rastering images
     minimum_time_interval: 0.5
-    transform_timeout: 0.5 #0.2
-    tf_buffer_duration: 60. #10
+    transform_timeout: 0.2
+    tf_buffer_duration: 30.
     stack_size_to_use: 40000000 #// program needs a larger stack size to serialize large maps
     enable_interactive_mode: true
 
     # General Parameters
     use_scan_matching: true
     use_scan_barycenter: true
-    minimum_travel_distance: 0.2 #0.5
-    minimum_travel_heading: 0.2 #0.5
-    scan_buffer_size: 100 #10
-    scan_buffer_maximum_scan_distance: 15.0
+    minimum_travel_distance: 0.5
+    minimum_travel_heading: 0.5
+    scan_buffer_size: 10
+    scan_buffer_maximum_scan_distance: 10.0
     link_match_minimum_response_fine: 0.1
     link_scan_maximum_distance: 1.5
-    loop_search_maximum_distance: 5.0 #3.0
+    loop_search_maximum_distance: 3.0
     do_loop_closing: true
     loop_match_minimum_chain_size: 10
     loop_match_maximum_variance_coarse: 3.0
@@ -52,7 +52,7 @@ slam_toolbox:
 
     # Correlation Parameters - Correlation Parameters
     correlation_search_space_dimension: 0.5
-    correlation_search_space_resolution: 0.05 #0.01
+    correlation_search_space_resolution: 0.01
     correlation_search_space_smear_deviation: 0.1
 
     # Correlation Parameters - Loop Closure Parameters
@@ -61,8 +61,8 @@ slam_toolbox:
     loop_search_space_smear_deviation: 0.03
 
     # Scan Matcher Parameters
-    distance_variance_penalty: 0.5 #0.5
-    angle_variance_penalty: 1.0 #1.0
+    distance_variance_penalty: 0.5
+    angle_variance_penalty: 1.0
 
     fine_search_angle_offset: 0.00349
     coarse_search_angle_offset: 0.349
@@ -91,8 +91,8 @@ amcl:
     laser_min_range: -1.0
     laser_model_type: "likelihood_field"
     max_beams: 60
-    max_particles: 5000
-    min_particles: 2500
+    max_particles: 4000
+    min_particles: 2000
     odom_frame_id: "odom"
     pf_err: 0.05
     pf_z: 0.99
@@ -104,8 +104,8 @@ amcl:
     sigma_hit: 0.2
     tf_broadcast: true
     transform_tolerance: 1.0
-    update_min_a: 0.02 #-0.1
-    update_min_d: 0.05 #-0.1
+    update_min_a: -0.1
+    update_min_d: -0.1
     z_hit: 0.5
     z_max: 0.05
     z_rand: 0.5
@@ -118,7 +118,7 @@ bt_navigator:
     global_frame: map
     robot_base_frame: base_footprint
     odom_topic: /odom
-    bt_loop_duration: 5 #10
+    bt_loop_duration: 10
     default_server_timeout: 20
     # 'default_nav_through_poses_bt_xml' and 'default_nav_to_pose_bt_xml' are use defaults:
     # nav2_bt_navigator/navigate_to_pose_w_replanning_and_recovery.xml
@@ -183,8 +183,8 @@ bt_navigator_navigate_to_pose_rclcpp_node:
 controller_server:
   ros__parameters:
     use_sim_time: True
-    controller_frequency: 3.0 #20.0
-    min_x_velocity_threshold: -0.001 #0.001
+    controller_frequency: 20.0
+    min_x_velocity_threshold: 0.001
     min_y_velocity_threshold: 0.5
     min_theta_velocity_threshold: 0.001
     failure_tolerance: 0.3
@@ -236,7 +236,7 @@ controller_server:
       sim_time: 1.7
       linear_granularity: 0.05
       angular_granularity: 0.025
-      transform_tolerance: 0.3 #0.2
+      transform_tolerance: 0.2
       xy_goal_tolerance: 0.25
       trans_stopped_velocity: 0.25
       short_circuit_trajectory_evaluation: True
@@ -256,15 +256,15 @@ controller_server:
 local_costmap:
   local_costmap:
     ros__parameters:
-      update_frequency: 10.0 #5
-      publish_frequency: 5.0 #2
+      update_frequency: 5.0
+      publish_frequency: 2.0
       global_frame: odom
       robot_base_frame: base_footprint
       use_sim_time: True
       rolling_window: true
       width: 3
       height: 3
-      resolution: 0.1 #0.05
+      resolution: 0.05
       robot_radius: 0.22
       plugins: [ "voxel_layer", "inflation_layer" ]
       inflation_layer:
