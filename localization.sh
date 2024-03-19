@@ -8,7 +8,7 @@ cleanup() {
     echo "Shutting down docker-compose services..."
     docker-compose -f ./scripts/docker-compose_rplidar.yml down
     docker-compose -f ./scripts/docker-compose_localization.yml down
-    docker-compose -f ./scripts/docker-compose_navigation.yml up down
+    docker-compose -f ./scripts/docker-compose_navigation.yml down
     exit 0
 }
 
