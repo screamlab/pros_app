@@ -26,8 +26,6 @@ services:
       - ./demo:/workspace/demo:ro
     networks:
       - my_bridge_network
-    depends_on:
-      - rplidar
     command: "ros2 launch /workspace/demo/slam.xml"
 
   rosbridge:
@@ -37,9 +35,9 @@ services:
     # environment:
     #   - ROS_DOMAIN_ID
 
-    # set bridge to host 
+    # set bridge to host
     # network_mode: host
-    # or export a port 
+    # or export a port
     networks:
       - my_bridge_network
     ports:
