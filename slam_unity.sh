@@ -5,8 +5,7 @@ docker-compose -f ./scripts/docker-compose_slam_unity.yml up -d
 
 cleanup() {
     echo "Shutting down docker-compose services..."
-    docker-compose -f ./scripts/docker-compose_rplidar_unity.yml down
-    docker-compose -f ./scripts/docker-compose_slam_unity.yml down
+    docker ps -aq --filter "name=pros_app*" | xargs docker rm -f
     exit 0
 }
 

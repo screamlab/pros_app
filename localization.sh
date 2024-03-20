@@ -6,9 +6,7 @@ docker-compose -f ./scripts/docker-compose_navigation.yml up -d
 
 cleanup() {
     echo "Shutting down docker-compose services..."
-    docker-compose -f ./scripts/docker-compose_rplidar.yml down
-    docker-compose -f ./scripts/docker-compose_localization.yml down
-    docker-compose -f ./scripts/docker-compose_navigation.yml down
+    docker ps -aq --filter "name=pros_app*" | xargs docker rm -f
     exit 0
 }
 
