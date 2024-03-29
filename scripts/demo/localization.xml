@@ -1,6 +1,6 @@
 <launch>
     <!-- 一起跑滿容易出錯的，因此可以先啟動好 rplidar 再執行 localization -->
-    <include file="$(dirname)/rplidar.xml"/>
+    <!-- <include file="$(dirname)/rplidar.xml"/> -->
 
     <!-- Specify the full path to your map file -->
     <arg name="map_file" default="$(dirname)/map/map01/map01.yaml"/>
