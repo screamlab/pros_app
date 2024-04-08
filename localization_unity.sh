@@ -12,6 +12,6 @@ cleanup() {
 
 trap cleanup SIGINT
 
-echo "Listening to docker-compose_navigation.yml logs. Press Ctrl+C to stop..."
-docker-compose -f ./scripts/docker-compose_navigation.yml logs -f &
+echo "Listening to docker-compose_navigation_unity.yml logs. Press Ctrl+C to stop..."
+docker-compose -f ./scripts/docker-compose_navigation_unity.yml logs -f &
 wait

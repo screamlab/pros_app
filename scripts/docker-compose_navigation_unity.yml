@@ -11,8 +11,7 @@ services:
       - ./demo:/workspace/demo:ro
     networks:
       - my_bridge_network
-#    command: "ros2 launch /workspace/demo/navigation_unity.xml"  # FileNotFoundError
-    command: "ros2 launch /workspace/demo/navigation.xml"
+    command: "ros2 launch /workspace/demo/navigation_unity.xml"
 
 # This will create a docker bridge network
 # docker network create --driver bridge pros_app_my_bridge_network
