@@ -1,0 +1,35 @@
+running egg_info
+creating ../../build/sipeed_tof/sipeed_tof.egg-info
+writing ../../build/sipeed_tof/sipeed_tof.egg-info/PKG-INFO
+writing dependency_links to ../../build/sipeed_tof/sipeed_tof.egg-info/dependency_links.txt
+writing entry points to ../../build/sipeed_tof/sipeed_tof.egg-info/entry_points.txt
+writing requirements to ../../build/sipeed_tof/sipeed_tof.egg-info/requires.txt
+writing top-level names to ../../build/sipeed_tof/sipeed_tof.egg-info/top_level.txt
+writing manifest file '../../build/sipeed_tof/sipeed_tof.egg-info/SOURCES.txt'
+reading manifest file '../../build/sipeed_tof/sipeed_tof.egg-info/SOURCES.txt'
+writing manifest file '../../build/sipeed_tof/sipeed_tof.egg-info/SOURCES.txt'
+running build
+running build_py
+creating /workspace/sipeed_tof_v075_ros2_v0.3_20230309/ros2/build/sipeed_tof/build
+creating /workspace/sipeed_tof_v075_ros2_v0.3_20230309/ros2/build/sipeed_tof/build/lib
+creating /workspace/sipeed_tof_v075_ros2_v0.3_20230309/ros2/build/sipeed_tof/build/lib/sipeed_tof
+copying sipeed_tof/publisher.py -> /workspace/sipeed_tof_v075_ros2_v0.3_20230309/ros2/build/sipeed_tof/build/lib/sipeed_tof
+copying sipeed_tof/__init__.py -> /workspace/sipeed_tof_v075_ros2_v0.3_20230309/ros2/build/sipeed_tof/build/lib/sipeed_tof
+running install
+running install_lib
+creating /workspace/sipeed_tof_v075_ros2_v0.3_20230309/ros2/install/sipeed_tof/lib/python3.10/site-packages/sipeed_tof
+copying /workspace/sipeed_tof_v075_ros2_v0.3_20230309/ros2/build/sipeed_tof/build/lib/sipeed_tof/publisher.py -> /workspace/sipeed_tof_v075_ros2_v0.3_20230309/ros2/install/sipeed_tof/lib/python3.10/site-packages/sipeed_tof
+copying /workspace/sipeed_tof_v075_ros2_v0.3_20230309/ros2/build/sipeed_tof/build/lib/sipeed_tof/__init__.py -> /workspace/sipeed_tof_v075_ros2_v0.3_20230309/ros2/install/sipeed_tof/lib/python3.10/site-packages/sipeed_tof
+byte-compiling /workspace/sipeed_tof_v075_ros2_v0.3_20230309/ros2/install/sipeed_tof/lib/python3.10/site-packages/sipeed_tof/publisher.py to publisher.cpython-310.pyc
+byte-compiling /workspace/sipeed_tof_v075_ros2_v0.3_20230309/ros2/install/sipeed_tof/lib/python3.10/site-packages/sipeed_tof/__init__.py to __init__.cpython-310.pyc
+running install_data
+creating /workspace/sipeed_tof_v075_ros2_v0.3_20230309/ros2/install/sipeed_tof/share/ament_index
+creating /workspace/sipeed_tof_v075_ros2_v0.3_20230309/ros2/install/sipeed_tof/share/ament_index/resource_index
+creating /workspace/sipeed_tof_v075_ros2_v0.3_20230309/ros2/install/sipeed_tof/share/ament_index/resource_index/packages
+copying resource/sipeed_tof -> /workspace/sipeed_tof_v075_ros2_v0.3_20230309/ros2/install/sipeed_tof/share/ament_index/resource_index/packages
+copying package.xml -> /workspace/sipeed_tof_v075_ros2_v0.3_20230309/ros2/install/sipeed_tof/share/sipeed_tof
+running install_egg_info
+Copying ../../build/sipeed_tof/sipeed_tof.egg-info to /workspace/sipeed_tof_v075_ros2_v0.3_20230309/ros2/install/sipeed_tof/lib/python3.10/site-packages/sipeed_tof-0.0.0-py3.10.egg-info
+running install_scripts
+Installing publisher script to /workspace/sipeed_tof_v075_ros2_v0.3_20230309/ros2/install/sipeed_tof/lib/sipeed_tof
+writing list of installed files to '/workspace/sipeed_tof_v075_ros2_v0.3_20230309/ros2/build/sipeed_tof/install.log'

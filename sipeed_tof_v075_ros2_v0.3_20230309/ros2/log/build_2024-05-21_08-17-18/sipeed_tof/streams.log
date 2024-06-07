@@ -1,0 +1,37 @@
+[0.934s] Invoking command in '/workspace/sipeed_tof_v075_ros2_v0.3_20230309/ros2/src/sipeed-tof': PYTHONPATH=/workspace/sipeed_tof_v075_ros2_v0.3_20230309/ros2/build/sipeed_tof/prefix_override:/workspace/sipeed_tof_v075_ros2_v0.3_20230309/ros2/install/sipeed_tof/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ../../build/sipeed_tof build --build-base /workspace/sipeed_tof_v075_ros2_v0.3_20230309/ros2/build/sipeed_tof/build install --record /workspace/sipeed_tof_v075_ros2_v0.3_20230309/ros2/build/sipeed_tof/install.log --single-version-externally-managed install_data
+[1.279s] running egg_info
+[1.281s] creating ../../build/sipeed_tof/sipeed_tof.egg-info
+[1.281s] writing ../../build/sipeed_tof/sipeed_tof.egg-info/PKG-INFO
+[1.283s] writing dependency_links to ../../build/sipeed_tof/sipeed_tof.egg-info/dependency_links.txt
+[1.283s] writing entry points to ../../build/sipeed_tof/sipeed_tof.egg-info/entry_points.txt
+[1.283s] writing requirements to ../../build/sipeed_tof/sipeed_tof.egg-info/requires.txt
+[1.283s] writing top-level names to ../../build/sipeed_tof/sipeed_tof.egg-info/top_level.txt
+[1.283s] writing manifest file '../../build/sipeed_tof/sipeed_tof.egg-info/SOURCES.txt'
+[1.285s] reading manifest file '../../build/sipeed_tof/sipeed_tof.egg-info/SOURCES.txt'
+[1.286s] writing manifest file '../../build/sipeed_tof/sipeed_tof.egg-info/SOURCES.txt'
+[1.287s] running build
+[1.287s] running build_py
+[1.287s] creating /workspace/sipeed_tof_v075_ros2_v0.3_20230309/ros2/build/sipeed_tof/build
+[1.287s] creating /workspace/sipeed_tof_v075_ros2_v0.3_20230309/ros2/build/sipeed_tof/build/lib
+[1.287s] creating /workspace/sipeed_tof_v075_ros2_v0.3_20230309/ros2/build/sipeed_tof/build/lib/sipeed_tof
+[1.287s] copying sipeed_tof/publisher.py -> /workspace/sipeed_tof_v075_ros2_v0.3_20230309/ros2/build/sipeed_tof/build/lib/sipeed_tof
+[1.287s] copying sipeed_tof/__init__.py -> /workspace/sipeed_tof_v075_ros2_v0.3_20230309/ros2/build/sipeed_tof/build/lib/sipeed_tof
+[1.288s] running install
+[1.288s] running install_lib
+[1.290s] creating /workspace/sipeed_tof_v075_ros2_v0.3_20230309/ros2/install/sipeed_tof/lib/python3.10/site-packages/sipeed_tof
+[1.290s] copying /workspace/sipeed_tof_v075_ros2_v0.3_20230309/ros2/build/sipeed_tof/build/lib/sipeed_tof/publisher.py -> /workspace/sipeed_tof_v075_ros2_v0.3_20230309/ros2/install/sipeed_tof/lib/python3.10/site-packages/sipeed_tof
+[1.290s] copying /workspace/sipeed_tof_v075_ros2_v0.3_20230309/ros2/build/sipeed_tof/build/lib/sipeed_tof/__init__.py -> /workspace/sipeed_tof_v075_ros2_v0.3_20230309/ros2/install/sipeed_tof/lib/python3.10/site-packages/sipeed_tof
+[1.291s] byte-compiling /workspace/sipeed_tof_v075_ros2_v0.3_20230309/ros2/install/sipeed_tof/lib/python3.10/site-packages/sipeed_tof/publisher.py to publisher.cpython-310.pyc
+[1.295s] byte-compiling /workspace/sipeed_tof_v075_ros2_v0.3_20230309/ros2/install/sipeed_tof/lib/python3.10/site-packages/sipeed_tof/__init__.py to __init__.cpython-310.pyc
+[1.295s] running install_data
+[1.296s] creating /workspace/sipeed_tof_v075_ros2_v0.3_20230309/ros2/install/sipeed_tof/share/ament_index
+[1.296s] creating /workspace/sipeed_tof_v075_ros2_v0.3_20230309/ros2/install/sipeed_tof/share/ament_index/resource_index
+[1.296s] creating /workspace/sipeed_tof_v075_ros2_v0.3_20230309/ros2/install/sipeed_tof/share/ament_index/resource_index/packages
+[1.296s] copying resource/sipeed_tof -> /workspace/sipeed_tof_v075_ros2_v0.3_20230309/ros2/install/sipeed_tof/share/ament_index/resource_index/packages
+[1.296s] copying package.xml -> /workspace/sipeed_tof_v075_ros2_v0.3_20230309/ros2/install/sipeed_tof/share/sipeed_tof
+[1.296s] running install_egg_info
+[1.299s] Copying ../../build/sipeed_tof/sipeed_tof.egg-info to /workspace/sipeed_tof_v075_ros2_v0.3_20230309/ros2/install/sipeed_tof/lib/python3.10/site-packages/sipeed_tof-0.0.0-py3.10.egg-info
+[1.301s] running install_scripts
+[1.335s] Installing publisher script to /workspace/sipeed_tof_v075_ros2_v0.3_20230309/ros2/install/sipeed_tof/lib/sipeed_tof
+[1.336s] writing list of installed files to '/workspace/sipeed_tof_v075_ros2_v0.3_20230309/ros2/build/sipeed_tof/install.log'
+[1.412s] Invoked command in '/workspace/sipeed_tof_v075_ros2_v0.3_20230309/ros2/src/sipeed-tof' returned '0': PYTHONPATH=/workspace/sipeed_tof_v075_ros2_v0.3_20230309/ros2/build/sipeed_tof/prefix_override:/workspace/sipeed_tof_v075_ros2_v0.3_20230309/ros2/install/sipeed_tof/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ../../build/sipeed_tof build --build-base /workspace/sipeed_tof_v075_ros2_v0.3_20230309/ros2/build/sipeed_tof/build install --record /workspace/sipeed_tof_v075_ros2_v0.3_20230309/ros2/build/sipeed_tof/install.log --single-version-externally-managed install_data
