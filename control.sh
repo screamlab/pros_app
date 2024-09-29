@@ -6,6 +6,7 @@ LOCALIZATION_SCRIPT="./localization_unity.sh"
 
 SLAM_COMPOSE="./scripts/docker-compose_slam_unity.yml"
 LOCALIZATION_COMPOSE="./scripts/docker-compose_localization_unity.yml"
+NAVIGATION_COMPOSE="./scripts/docker-compose_navigation_unity.yml"
 STORE_MAP_COMPOSE="./scripts/docker-compose_store_map.yml"
 RPLIDAR_COMPOSE="./scripts/docker-compose_rplidar_unity.yml"
 
@@ -15,14 +16,14 @@ cleanup() {
     docker compose -f "$SLAM_COMPOSE" down --timeout 0 > /dev/null 2>&1
     docker compose -f "$STORE_MAP_COMPOSE" down --timeout 0 > /dev/null 2>&1
     docker compose -f "$LOCALIZATION_COMPOSE" down --timeout 0 > /dev/null 2>&1
-
-    # 強制關閉所有名稱中包含 `scripts-navigation` 的容器
-    echo "強制關閉所有名稱中包含 'scripts-navigation' 的容器..."
-    containers=$(docker ps -q --filter "name=scripts-navigation")
-    if [ -n "$containers" ]; then
-        docker kill $containers
-        echo "容器已強制關閉：$containers"
-    fi
+    docker compose -f "$NAVIGATION_COMPOSE" down --timeout 0 > /dev/null 2>&1
+    # # 強制關閉所有名稱中包含 `scripts-navigation` 的容器
+    # echo "強制關閉所有名稱中包含 'scripts-navigation' 的容器..."
+    # containers=$(docker ps -q --filter "name=scripts-navigation")
+    # if [ -n "$containers" ]; then
+    #     docker stop $containers
+    #     echo "容器已強制關閉：$containers"
+    # fi
 }
 
 stop_container() {
@@ -134,11 +135,12 @@ while true; do
             cleanup
 
             # 檢查是否有當前的 localization_unity.sh 正在運行
-            if is_project_running "$LOCALIZATION_COMPOSE"; then
-                echo "localization_unity.sh 的容器已在運行，重新啟動..."
-                stop_container "$LOCALIZATION_COMPOSE"
-                sleep 2  # 等待容器完全停止
-            fi
+            # if is_project_running "$LOCALIZATION_COMPOSE"; then
+            #     echo "localization_unity.sh 的容器已在運行，重新啟動..."
+            #     # stop_container "$LOCALIZATION_COMPOSE"
+            #     cleanup
+            #     sleep 2  # 等待容器完全停止
+            # fi
 
             # 啟動 localization_unity.sh，允許按下 'q' 停止腳本並調用 cleanup
             run_script_with_monitor "$LOCALIZATION_SCRIPT" "$LOCALIZATION_COMPOSE" "false" "true" "true"
