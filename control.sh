@@ -11,7 +11,7 @@ STORE_MAP_COMPOSE="./scripts/docker-compose_store_map.yml"
 RPLIDAR_COMPOSE="./scripts/docker-compose_rplidar_unity.yml"
 
 cleanup() {
-    echo "正在快速關閉所有 Docker 容器..."
+    # echo "正在快速關閉所有 Docker 容器..."
     docker compose -f "$RPLIDAR_COMPOSE" down --timeout 0 > /dev/null 2>&1
     docker compose -f "$SLAM_COMPOSE" down --timeout 0 > /dev/null 2>&1
     docker compose -f "$STORE_MAP_COMPOSE" down --timeout 0 > /dev/null 2>&1
@@ -111,6 +111,7 @@ while true; do
             # 關閉選項 3 對應的容器
             # stop_container "$LOCALIZATION_COMPOSE"
             cleanup
+            echo "啟動 slam 中..."
             # 啟動 slam_unity.sh，不允許按下 'q' 停止腳本
             run_script_with_monitor "$SLAM_SCRIPT" "$SLAM_COMPOSE" "false" "false" "false"
             ;;
@@ -133,7 +134,7 @@ while true; do
             # echo "關閉選項 2 的容器..."
             # stop_container "$STORE_MAP_COMPOSE"
             cleanup
-
+            echo "啟動 localization 中..."
             # 檢查是否有當前的 localization_unity.sh 正在運行
             # if is_project_running "$LOCALIZATION_COMPOSE"; then
             #     echo "localization_unity.sh 的容器已在運行，重新啟動..."
