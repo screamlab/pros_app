@@ -1,0 +1,40 @@
+services:
+  dabai:
+    image: ghcr.io/screamlab/pros_jetson_driver_image:latest
+    env_file:
+      - .env
+    devices:
+      - "/dev/bus/usb:/dev/bus/usb"
+    networks:
+      - my_bridge_network
+    command: "ros2 launch orbbec_camera dabai_dcw.launch.py"
+
+  rosbridge:
+    image: ghcr.io/screamlab/pros_jetson_driver_image:latest
+    env_file:
+      - .env
+    environment:
+      - ROS_DOMAIN_ID
+
+    # set bridge to host
+    # network_mode: host
+    # or export a port
+    networks:
+      - my_bridge_network
+    ports:
+      - 9090:9090
+    command: "ros2 launch rosbridge_server rosbridge_websocket_launch.xml"
+
+  compress:
+    image: ghcr.io/screamlab/pros_jetson_driver_image:latest
+    env_file:
+      - .env
+    networks:
+      - my_bridge_network
+    depends_on:
+      - dabai
+    command: "ros2 run image_transport republish raw --ros-args --remap in:=camera/color/image_raw -p out:=camera/compressed"
+
+networks:
+  my_bridge_network:
+    driver: bridge
