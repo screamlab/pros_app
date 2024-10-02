@@ -1,8 +1,20 @@
 #!/bin/bash
 
-docker-compose -f ./scripts/docker-compose_ydlidar.yml up -d
-docker-compose -f ./scripts/docker-compose_localization.yml up -d
-docker-compose -f ./scripts/docker-compose_navigation.yml up -d
+# Determine which docker compose command to use
+if command -v docker-compose &> /dev/null
+then
+    DOCKER_COMPOSE_COMMAND="docker-compose"
+elif docker compose version &> /dev/null
+then
+    DOCKER_COMPOSE_COMMAND="docker compose"
+else
+    echo "Neither 'docker-compose' nor 'docker compose' is installed. Please install Docker Compose."
+    exit 1
+fi
+
+$DOCKER_COMPOSE_COMMAND -f ./scripts/docker-compose_ydlidar.yml up -d
+$DOCKER_COMPOSE_COMMAND -f ./scripts/docker-compose_localization.yml up -d
+$DOCKER_COMPOSE_COMMAND -f ./scripts/docker-compose_navigation.yml up -d
 
 cleanup() {
     echo "Shutting down docker-compose services..."
@@ -13,5 +25,5 @@ cleanup() {
 trap cleanup SIGINT
 
 echo "Listening to docker-compose_navigation.yml logs. Press Ctrl+C to stop..."
-docker-compose -f ./scripts/docker-compose_navigation.yml logs -f &
+$DOCKER_COMPOSE_COMMAND -f ./scripts/docker-compose_navigation.yml logs -f &
 wait

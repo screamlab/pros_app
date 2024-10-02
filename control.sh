@@ -10,13 +10,25 @@ NAVIGATION_COMPOSE="./scripts/docker-compose_navigation_unity.yml"
 STORE_MAP_COMPOSE="./scripts/docker-compose_store_map.yml"
 RPLIDAR_COMPOSE="./scripts/docker-compose_rplidar_unity.yml"
 
+# Determine which docker compose command to use
+if command -v docker-compose &> /dev/null
+then
+    DOCKER_COMPOSE_COMMAND="docker-compose"
+elif docker compose version &> /dev/null
+then
+    DOCKER_COMPOSE_COMMAND="docker compose"
+else
+    echo "Neither 'docker-compose' nor 'docker compose' is installed. Please install Docker Compose."
+    exit 1
+fi
+
 cleanup() {
-    # echo "正在快速關閉所有 Docker 容器..."
-    docker compose -f "$RPLIDAR_COMPOSE" down --timeout 0 > /dev/null 2>&1
-    docker compose -f "$SLAM_COMPOSE" down --timeout 0 > /dev/null 2>&1
-    docker compose -f "$STORE_MAP_COMPOSE" down --timeout 0 > /dev/null 2>&1
-    docker compose -f "$LOCALIZATION_COMPOSE" down --timeout 0 > /dev/null 2>&1
-    docker compose -f "$NAVIGATION_COMPOSE" down --timeout 0 > /dev/null 2>&1
+    echo "正在快速關閉所有 Docker 容器..."
+    $DOCKER_COMPOSE_COMMAND -f "$RPLIDAR_COMPOSE" down --timeout 0 > /dev/null 2>&1
+    $DOCKER_COMPOSE_COMMAND -f "$SLAM_COMPOSE" down --timeout 0 > /dev/null 2>&1
+    $DOCKER_COMPOSE_COMMAND -f "$STORE_MAP_COMPOSE" down --timeout 0 > /dev/null 2>&1
+    $DOCKER_COMPOSE_COMMAND -f "$LOCALIZATION_COMPOSE" down --timeout 0 > /dev/null 2>&1
+    $DOCKER_COMPOSE_COMMAND -f "$NAVIGATION_COMPOSE" down --timeout 0 > /dev/null 2>&1
     # # 強制關閉所有名稱中包含 `scripts-navigation` 的容器
     # echo "強制關閉所有名稱中包含 'scripts-navigation' 的容器..."
     # containers=$(docker ps -q --filter "name=scripts-navigation")
@@ -29,7 +41,7 @@ cleanup() {
 stop_container() {
     local compose_file="$1"
     echo "正在關閉 $compose_file 中的容器..."
-    docker compose -f "$compose_file" down --timeout 0 > /dev/null 2>&1
+    $DOCKER_COMPOSE_COMMAND -f "$compose_file" down --timeout 0 > /dev/null 2>&1
 
     # 再次檢查並強制關閉特定容器
     echo "檢查並強制關閉 $compose_file 中的容器..."
@@ -50,7 +62,7 @@ get_compose_project_name() {
 # 檢查項目中的容器是否存在
 is_project_running() {
     local compose_file="$1"
-    docker compose -f "$compose_file" ps --services --filter "status=running" | grep -q .
+    $DOCKER_COMPOSE_COMMAND -f "$compose_file" ps --services --filter "status=running" | grep -q .
 }
 
 trap cleanup SIGINT

@@ -1,8 +1,20 @@
 #!/bin/bash
 
+# Determine which docker compose command to use
+if command -v docker-compose &> /dev/null
+then
+    DOCKER_COMPOSE_COMMAND="docker-compose"
+elif docker compose version &> /dev/null
+then
+    DOCKER_COMPOSE_COMMAND="docker compose"
+else
+    echo "Neither 'docker-compose' nor 'docker compose' is installed. Please install Docker Compose."
+    exit 1
+fi
+
 cleanup() {
     echo "Shutting down docker-compose services..."
-    docker-compose -f ./scripts/docker-compose_store_map.yml down --timeout 0 > /dev/null 2>&1
+    $DOCKER_COMPOSE_COMMAND -f ./scripts/docker-compose_store_map.yml down --timeout 0 > /dev/null 2>&1
 }
 
 trap 'cleanup; exit 0' SIGINT
@@ -12,11 +24,11 @@ RETRY_COUNT=0
 
 while true; do
     echo "Starting docker-compose services..."
-    docker-compose -f ./scripts/docker-compose_store_map.yml up -d > /dev/null 2>&1
+    $DOCKER_COMPOSE_COMMAND -f ./scripts/docker-compose_store_map.yml up -d > /dev/null 2>&1
 
     echo "Monitoring logs for errors..."
 
-    docker-compose -f ./scripts/docker-compose_store_map.yml logs -f | while read -r line; do
+    $DOCKER_COMPOSE_COMMAND -f ./scripts/docker-compose_store_map.yml logs -f | while read -r line; do
         if echo "$line" | grep -q "Failed to spin map subscription"; then
             echo "Error detected in logs: Failed to spin map subscription"
 
