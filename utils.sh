@@ -1,7 +1,7 @@
 #!/bin/bash
 
 cleanup() {
-    local scripts=$1
+    local scripts=("$@")  # Accept all arguments as an array
     echo "Shutting down docker compose services..."
     for script in "${scripts[@]}"; do
         echo "Stopping services for $script..."
@@ -39,7 +39,7 @@ main() {
     done
 
     # Set the trap to handle cleanup for all scripts
-    trap "cleanup $SCRIPTS" SIGINT
+    trap 'cleanup "${SCRIPTS[@]}"' SIGINT  # Expand SCRIPTS array when passing
 
     # Wait for all background processes
     wait
