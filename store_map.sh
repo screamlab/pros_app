@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Determine which docker compose command to use
+# 確定使用哪個 docker compose 指令
 if command -v docker-compose &> /dev/null
 then
     DOCKER_COMPOSE_COMMAND="docker-compose"
@@ -12,6 +12,7 @@ else
     exit 1
 fi
 
+# 清理 docker-compose
 cleanup() {
     echo "Shutting down docker-compose services..."
     $DOCKER_COMPOSE_COMMAND -f ./scripts/docker-compose_store_map.yml down --timeout 0 > /dev/null 2>&1
@@ -19,53 +20,46 @@ cleanup() {
 
 trap 'cleanup; exit 0' SIGINT
 
+# 重試計數器
 MAX_RETRIES=5
-RETRY_COUNT=0
+retry_count=0
+success_flag=false
 
-while true; do
-    echo "Starting docker-compose services..."
+while [ $retry_count -lt $MAX_RETRIES ]; do
+    echo "Starting docker-compose services... (Attempt $((retry_count+1))/$MAX_RETRIES)"
     $DOCKER_COMPOSE_COMMAND -f ./scripts/docker-compose_store_map.yml up -d > /dev/null 2>&1
 
     echo "Monitoring logs for errors..."
 
-    $DOCKER_COMPOSE_COMMAND -f ./scripts/docker-compose_store_map.yml logs -f | while read -r line; do
+    # 監控 docker-compose 的 logs
+    while read -r line; do
         if echo "$line" | grep -q "Failed to spin map subscription"; then
             echo "Error detected in logs: Failed to spin map subscription"
-
             cleanup
-
-            ((RETRY_COUNT++))
-
-            if [ "$RETRY_COUNT" -ge "$MAX_RETRIES" ]; then
-                echo "Maximum retries reached ($MAX_RETRIES). Exiting."
-                exit 1
-            fi
-
-            echo "Retrying... Attempt $RETRY_COUNT of $MAX_RETRIES"
-
-            sleep 2
-
-            break
+            echo "Retrying..."
+            sleep 2  # 等待短時間後重試
+            break  # 偵測到錯誤，離開 log 監控，重新開始過程
         fi
 
         if echo "$line" | grep -q "success"; then
-            echo "Success detected. Exiting."
-            cleanup
-            exit 0
+            echo "Success detected."
+            success_flag=true
+            break  # 偵測到成功，離開 log 監控
         fi
-    done
+    done < <($DOCKER_COMPOSE_COMMAND -f ./scripts/docker-compose_store_map.yml logs -f)
 
-    if [ "$RETRY_COUNT" -eq 0 ]; then
-        echo "No errors detected in logs. Proceeding."
-        break
+    # 如果偵測到成功，則跳出主循環
+    if [ "$success_flag" = true ]; then
+        echo "儲存成功"
+        cleanup
+        exit 0
     fi
 
-    if [ "$RETRY_COUNT" -lt "$MAX_RETRIES" ]; then
-        continue
-    fi
+    # 增加重試計數
+    retry_count=$((retry_count+1))
 done
 
-echo "Store map operation completed successfully."
-
-echo "Press Ctrl+C to stop..."
-wait
+# 超過最大重試次數
+echo "儲存失敗，已超過最大重試次數 ($MAX_RETRIES)."
+cleanup
+exit 1
