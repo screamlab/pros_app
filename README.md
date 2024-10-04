@@ -13,17 +13,6 @@ Advising professor:
 
 
 
-## Car Type
-
-| Type | Description                            |
-| ---- | -------------------------------------- |
-| A    | Rear-wheel drive, front-wheel steering |
-| B    | Rear-wheel drive                       |
-| C    | Four-wheel drive                       |
-| D    | Mecanum wheel                          |
-
-
-
 ## Workflow Diagram
 
 ![workflow_diagram](./img/workflow_diagram.png)
@@ -34,53 +23,68 @@ Advising professor:
 
 This project contains the following 3 features shown above.
 
-- `RPLidar`
-- `Camera`
-- `SLAM`
+- SLAM
+  - SLAM for real car
+  - SLAM for Unity
+
+- Store SLAM map
+- Localization and Navigation
+  - Localization and Navigation for real car
+  - Localization and Navigation for Unity
+
+- Depth Camera
+  - Astra camera
+  - Dabai camera
 
 
 
-## The Link to the other Features
 
-[pros_car](https://github.com/otischung/pros_car) contains the following features.
+## Get Started
 
-- `Keyboard`
-- `Car_<A,B,C,D>_serial_reader`
-- `Car_<A,B,C,D>_serial_writer`
-- `RandomAI`
+Execute `control.sh` to start.
 
-[pros_AI](https://github.com/otischung/pros_AI) contains `Car_B_AI`.
-
-[pros_AI_image](https://github.com/otischung/pros_AI_image) contains the docker image used by pros_AI.
-
-
-
-# Get Started
-
-## docker-compose 安裝
-
-```bash
-sudo apt-get update
-sudo apt-get install curl
-sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
-```
+- Main menu
+  - Enter number to execute the script.
+  - Enter `s` to show running processes.
+  - Enter `d` to shutdown all child processes.
+  - Enter `q` to quit the control process.
+- Running process state
+  - You will enter this state after executing scripts.
+  - Single press `b` to return to the main menu without terminating the script.
+  - Single press `q` to terminate the script and return to the main menu.
 
 
 
-## fox glove 安裝 (取代 rviz 用)
+## Dev Note
 
-![Untitled](D:\Chrome_Downloads\cab5d69b-f489-4602-847b-60ed5f6de119_Export-a51693f5-7a17-4520-94ef-96d7c599b2bd\2023 11 27-lidar、點雲圖 601730022132420eb8acd79817e867eb\Untitled.png)
+- Compatible with `docker-compose` and `docker compose`.
 
-```bash
-https://foxglove.dev/
-```
+- The destructor for each unit shell script is written in `utils.sh`, which is triggered by SIGINT.
 
-Reference documentation:
+- The `control.sh` triggers each destructor of the child process by sending SIGINT to them.
 
-[ROS 2 | Foxglove | Docs](https://docs.foxglove.dev/docs/connecting-to-data/frameworks/ros2/)
+- The command for removing items in the bash array has a known issue. It will remain an empty string after removing the item.
 
+  ```bash
+  # Remove the process from child_pids array
+  child_pids=("${child_pids[@]/$script_pid}")
+  ```
 
+- The code structure
+
+  ```
+  control.sh ---> camera_astra.sh			---> utils.sh
+              |-> camera_dabai.sh			-|
+              |-> localization_unity.sh	-|
+              |-> localization_ydlidar.sh	-|
+              |-> localization.sh			-|
+              |-> slam_unity.sh			-|
+              |-> slam_ydlidar.sh			-|
+              |-> slam.sh					-|
+              |-> store_map.sh			-|
+  ```
+
+  
 
 ## 設定 USB Rule
 
@@ -89,6 +93,7 @@ Reference documentation:
 - 前面的 esp32: usb_front_wheel
 - 後面的 esp32: usb_rear_wheel
 - lidar: usb_lidar
+- [Reference](https://inegm.medium.com/persistent-names-for-usb-serial-devices-in-linux-dev-ttyusbx-dev-custom-name-fd49b5db9af1)
 
 
 
@@ -156,6 +161,3 @@ docker network create --driver bridge pros_app_my_bridge_network
 在 Linux 系統中，可以使用 `bmon` 得知網路頻寬流量
 
 這個 node 是讀取 `/camera` 的 topic，經處理後 redirect 到 `/out` 這個新的 topic，使用者只須從 rviz 或 foxglove 選取壓縮之後的 topic 即可
-
-## 使用方式
-### 安裝
