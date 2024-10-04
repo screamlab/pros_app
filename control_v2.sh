@@ -23,8 +23,28 @@ show_menu() {
     for i in "${!scripts[@]}"; do
         echo "$((i+1)). ${scripts[i]}"
     done
+    echo "s. Show running processes"
     echo "d. Shutdown all child processes"
     echo "q. Quit"
+}
+
+# Function to show running PIDs and their commands
+show_running_processes() {
+    if [[ ${#child_pids[@]} -eq 0 ]]; then
+        echo "No child processes are currently running."
+    else
+        echo "Running processes:"
+        for pid in "${child_pids[@]}"; do
+            # Check if the process is still running before retrieving its command
+            if kill -0 $pid 2>/dev/null; then
+                command=$(ps -p $pid -o args= 2>/dev/null)
+                echo "PID: $pid - Command: $command"
+            else
+                # If process is not found, remove it from child_pids
+                child_pids=("${child_pids[@]/$pid}")
+            fi
+        done
+    fi
 }
 
 # Function to handle running the script
@@ -42,7 +62,7 @@ run_script() {
     script_pid=$!
     child_pids+=("$script_pid")
 
-    # Wait for user to press 'q'
+    # Wait for user to press 'q' or 'b'
     while :; do
         read -n 1 input
         if [[ $input == "q" ]]; then
@@ -66,9 +86,12 @@ shutdown_all_children() {
     else
         echo "Shutting down all child processes..."
         for pid in "${child_pids[@]}"; do
-            echo "Terminating process: $pid"
-            kill -SIGINT $pid
-            wait $pid 2>/dev/null
+            # Check if the process is still running before retrieving its command
+            if kill -0 $pid 2>/dev/null; then
+                echo "Terminating process: $pid"
+                kill -SIGINT $pid
+                wait $pid 2>/dev/null
+            fi
         done
         child_pids=()
     fi
@@ -87,6 +110,8 @@ while true; do
         break
     elif [[ $choice == "d" ]]; then
         shutdown_all_children
+    elif [[ $choice == "s" ]]; then
+        show_running_processes
     elif [[ $choice =~ ^[0-9]+$ ]] && (( choice >= 1 && choice <= ${#scripts[@]} )); then
         selected_script="${scripts[$((choice-1))]}"
         
@@ -99,5 +124,6 @@ while true; do
     else
         echo "Invalid choice. Please try again."
     fi
-    sleep 1
+    echo "Press any key to continue..."
+    read -n 1 -s
 done
