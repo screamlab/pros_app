@@ -1,4 +1,4 @@
 #!/bin/bash
 
 source "./utils.sh"
-main "./scripts/docker-compose_camera.yml"
+main "./scripts/docker-compose_camera_astra.yml"
