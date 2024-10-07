@@ -1,8 +1,6 @@
-version: '3.7'
-
 services:
   camera:
-    image: ghcr.io/otischung/pros_ai_image:latest
+    image: ghcr.io/screamlab/pros_jetson_driver_image:latest
     env_file:
       - .env
     # environment:
@@ -16,7 +14,7 @@ services:
     command: "ros2 launch astra_camera astro_pro_plus.launch.xml"
 
   rosbridge:
-    image: ghcr.io/otischung/pros_ai_image:latest
+    image: ghcr.io/screamlab/pros_base_image:latest
     env_file:
       - .env
     environment:
@@ -32,7 +30,7 @@ services:
     command: "ros2 launch rosbridge_server rosbridge_websocket_launch.xml"
   
   compress:
-    image: ghcr.io/otischung/pros_ai_image:latest
+    image: ghcr.io/screamlab/pros_jetson_driver_image:latest
     env_file:
       - .env
     networks:

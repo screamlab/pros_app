@@ -10,7 +10,7 @@ services:
     command: "ros2 launch orbbec_camera dabai_dcw.launch.py"
 
   rosbridge:
-    image: ghcr.io/screamlab/pros_jetson_driver_image:latest
+    image: ghcr.io/screamlab/pros_base_image:latest
     env_file:
       - .env
     environment:
