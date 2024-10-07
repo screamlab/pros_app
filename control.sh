@@ -11,6 +11,7 @@ scripts=(
     "./localization_ydlidar.sh"
     "./camera_astra.sh"
     "./camera_dabai.sh"
+    "./rosbridge_server.sh"
 )
 
 # Array to keep track of child process IDs
