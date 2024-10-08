@@ -1,4 +1,4 @@
 #!/bin/bash
 
 source "./utils.sh"
-main "./scripts/docker-compose_ydlidar.yml" "./scripts/docker-compose_localization.yml" "./scripts/docker-compose_navigation.yml"
+main "./docker/compose/docker-compose_ydlidar.yml" "./docker/compose/docker-compose_localization.yml" "./docker/compose/docker-compose_navigation.yml"
