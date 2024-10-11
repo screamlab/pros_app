@@ -98,9 +98,36 @@ shutdown_all_children() {
     fi
 }
 
+# Function to display help message
+print_help() {
+    echo "Usage: $0 [options] <script>"
+    echo "Options:"
+    echo "  -s, --silent      Run the script in silent mode (suppress logs)"
+    echo "  -h, --help        Show this help message and exit"
+    echo "Script:"
+    echo "  The script to execute (e.g., ./store_map.sh)."
+    exit 0
+}
+
+# Default value for silent mode
+silent=false
+
+# Parse arguments
+while [[ "$#" -gt 0 ]]; do
+    case $1 in
+        -s|--silent) silent=true ;;  # Set silent mode
+        -h|--help) print_help ;;  # Print help and exit
+    esac
+    shift
+done
+
 # Main loop
 while true; do
     show_menu
+
+    if [[ "$silent" == true ]]; then
+        echo "===== Running in silent mode ====="
+    fi
 
     read -p "Enter your choice: " choice
 
@@ -116,9 +143,9 @@ while true; do
     elif [[ $choice =~ ^[0-9]+$ ]] && (( choice >= 1 && choice <= ${#scripts[@]} )); then
         selected_script="${scripts[$((choice-1))]}"
         
-        # Determine if we want to print logs (only for store_map.sh)
-        if [[ $selected_script == "./store_map.sh" ]]; then
-            run_script "$selected_script" true  # Print logs for store_map.sh
+        # Determine if we want to print logs
+        if [[ "$silent" == false || $selected_script == "./store_map.sh" ]]; then
+            run_script "$selected_script" true  # Print logs if not in silent mode or if running store_map.sh
         else
             run_script "$selected_script" false  # Suppress logs for other scripts
         fi
