@@ -1,6 +1,6 @@
 services:
   camera:
-    image: registry.screamtrumpet.csie.ncku.edu.tw/screamlab/pros_jetson_driver_image:latest
+    image: registry.screamtrumpet.csie.ncku.edu.tw/pros_images/pros_jetson_driver_image:latest
     env_file:
       - .env
     devices:
@@ -12,7 +12,7 @@ services:
     command: "ros2 launch astra_camera astro_pro_plus.launch.xml"
 
   rosbridge:
-    image: registry.screamtrumpet.csie.ncku.edu.tw/screamlab/pros_base_image:latest
+    image: registry.screamtrumpet.csie.ncku.edu.tw/pros_images/pros_base_image:latest
     env_file:
       - .env
     networks:
@@ -22,7 +22,7 @@ services:
     command: "ros2 launch rosbridge_server rosbridge_websocket_launch.xml"
   
   compress:
-    image: registry.screamtrumpet.csie.ncku.edu.tw/screamlab/pros_jetson_driver_image:latest
+    image: registry.screamtrumpet.csie.ncku.edu.tw/pros_images/pros_jetson_driver_image:latest
     env_file:
       - .env
     networks:

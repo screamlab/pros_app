@@ -1,6 +1,6 @@
 services:
   localization:
-    image: registry.screamtrumpet.csie.ncku.edu.tw/screamlab/pros_jetson_driver_image:latest
+    image: registry.screamtrumpet.csie.ncku.edu.tw/pros_images/pros_jetson_driver_image:latest
     env_file:
       - .env
     volumes:
@@ -10,7 +10,7 @@ services:
     command: "ros2 launch /workspace/demo/localization.xml"
 
   rosbridge:
-    image: registry.screamtrumpet.csie.ncku.edu.tw/screamlab/pros_base_image:latest
+    image: registry.screamtrumpet.csie.ncku.edu.tw/pros_images/pros_base_image:latest
     env_file:
       - .env
     networks:
