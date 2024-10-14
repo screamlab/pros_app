@@ -1,10 +1,8 @@
 services:
   camera:
-    image: ghcr.io/screamlab/pros_jetson_driver_image:latest
+    image: registry.screamtrumpet.csie.ncku.edu.tw/screamlab/pros_jetson_driver_image:latest
     env_file:
       - .env
-    # environment:
-    #   - ROS_DOMAIN_ID
     devices:
       - "/dev/video0:/dev/video0"
       - "/dev/video1:/dev/video1"
@@ -14,15 +12,9 @@ services:
     command: "ros2 launch astra_camera astro_pro_plus.launch.xml"
 
   rosbridge:
-    image: ghcr.io/screamlab/pros_base_image:latest
+    image: registry.screamtrumpet.csie.ncku.edu.tw/screamlab/pros_base_image:latest
     env_file:
       - .env
-    environment:
-      - ROS_DOMAIN_ID
-
-    # set bridge to host
-    # network_mode: host
-    # or export a port
     networks:
       - my_bridge_network
     ports:
@@ -30,7 +22,7 @@ services:
     command: "ros2 launch rosbridge_server rosbridge_websocket_launch.xml"
   
   compress:
-    image: ghcr.io/screamlab/pros_jetson_driver_image:latest
+    image: registry.screamtrumpet.csie.ncku.edu.tw/screamlab/pros_jetson_driver_image:latest
     env_file:
       - .env
     networks:

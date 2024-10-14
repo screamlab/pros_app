@@ -1,6 +1,8 @@
 services:
   lidar_tranform:
-    image: ghcr.io/screamlab/pros_lidar_transformer:latest
+    image: registry.screamtrumpet.csie.ncku.edu.tw/screamlab/pros_lidar_transformer:latest
+    env_file:
+      - .env
     networks:
       - my_bridge_network
     command: "ros2 run unity_transformer lidar_tranformer_node"

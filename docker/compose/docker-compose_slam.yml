@@ -1,11 +1,8 @@
 services:
   slam:
-    image: ghcr.io/otischung/pros_ai_image:latest
-    # image: ghcr.io/screamlab/pros_jetson_driver_image:latest
+    image: registry.screamtrumpet.csie.ncku.edu.tw/screamlab/pros_jetson_driver_image:latest
     env_file:
       - .env
-    # environment:
-    #   - ROS_DOMAIN_ID
     volumes:
       - ./demo:/workspace/demo:ro
     networks:
@@ -13,11 +10,9 @@ services:
     command: "ros2 launch /workspace/demo/slam.xml"
 
   rosbridge:
-    image: ghcr.io/screamlab/pros_base_image:latest
+    image: registry.screamtrumpet.csie.ncku.edu.tw/screamlab/pros_base_image:latest
     env_file:
       - .env
-    # environment:
-    #   - ROS_DOMAIN_ID
     networks:
       - my_bridge_network
     ports:

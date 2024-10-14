@@ -1,7 +1,6 @@
 services:
   rplidar:
-    image: ghcr.io/otischung/pros_ai_image:latest
-    # image: ghcr.io/screamlab/pros_jetson_driver_image:latest
+    image: registry.screamtrumpet.csie.ncku.edu.tw/screamlab/pros_jetson_driver_image:latest
     env_file:
       - .env
     volumes:
