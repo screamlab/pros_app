@@ -1,4 +1,4 @@
 #!/bin/bash
 
 source "./utils.sh"
-main "./scripts/docker-compose_rplidar_unity.yml" "./scripts/docker-compose_slam_unity.yml"
+main "./docker/compose/docker-compose_lidar_transformer.yml" "./docker/compose/docker-compose_rplidar_unity.yml" "./docker/compose/docker-compose_slam_unity.yml"

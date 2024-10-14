@@ -1,20 +1,26 @@
-version: '3.7'
-
 services:
+  lidar_tranform:
+    image: registry.screamtrumpet.csie.ncku.edu.tw/screamlab/pros_lidar_transformer:latest
+    env_file:
+      - .env
+    networks:
+      - my_bridge_network
+    command: "ros2 run unity_transformer lidar_tranformer_node"
+
   slam:
-    image: ghcr.io/otischung/pros_ai_image:latest
+    image: registry.screamtrumpet.csie.ncku.edu.tw/screamlab/pros_jetson_driver_image:latest
     env_file:
       - .env
     volumes:
       - ./demo:/workspace/demo:ro
     networks:
       - my_bridge_network
-    # depends_on:
-    #   - rplidar
+    depends_on:
+      - lidar_tranform
     command: "ros2 launch /workspace/demo/slam.xml"
 
   rosbridge:
-    image: ghcr.io/otischung/pros_ai_image:latest
+    image: registry.screamtrumpet.csie.ncku.edu.tw/screamlab/pros_base_image:latest
     env_file:
       - .env
     networks:

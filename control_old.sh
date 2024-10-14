@@ -4,11 +4,11 @@ SLAM_SCRIPT="./slam_unity.sh"
 STORE_MAP_SCRIPT="./store_map.sh"
 LOCALIZATION_SCRIPT="./localization_unity.sh"
 
-SLAM_COMPOSE="./scripts/docker-compose_slam_unity.yml"
-LOCALIZATION_COMPOSE="./scripts/docker-compose_localization_unity.yml"
-NAVIGATION_COMPOSE="./scripts/docker-compose_navigation_unity.yml"
-STORE_MAP_COMPOSE="./scripts/docker-compose_store_map.yml"
-RPLIDAR_COMPOSE="./scripts/docker-compose_rplidar_unity.yml"
+SLAM_COMPOSE="./docker/compose/docker-compose_slam_unity.yml"
+LOCALIZATION_COMPOSE="./docker/compose/docker-compose_localization_unity.yml"
+NAVIGATION_COMPOSE="./docker/compose/docker-compose_navigation_unity.yml"
+STORE_MAP_COMPOSE="./docker/compose/docker-compose_store_map.yml"
+RPLIDAR_COMPOSE="./docker/compose/docker-compose_rplidar_unity.yml"
 
 # Determine which docker compose command to use
 if command -v docker-compose &> /dev/null

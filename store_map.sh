@@ -15,7 +15,7 @@ fi
 # 清理 docker-compose
 cleanup() {
     echo "Shutting down docker-compose services..."
-    $DOCKER_COMPOSE_COMMAND -f ./scripts/docker-compose_store_map.yml down --timeout 0 > /dev/null 2>&1
+    $DOCKER_COMPOSE_COMMAND -f ./docker/compose/docker-compose_store_map.yml down --timeout 0 > /dev/null 2>&1
 }
 
 trap 'cleanup; exit 0' SIGINT
@@ -27,7 +27,7 @@ success_flag=false
 
 while [ $retry_count -lt $MAX_RETRIES ]; do
     echo "Starting docker-compose services... (Attempt $((retry_count+1))/$MAX_RETRIES)"
-    $DOCKER_COMPOSE_COMMAND -f ./scripts/docker-compose_store_map.yml up -d > /dev/null 2>&1
+    $DOCKER_COMPOSE_COMMAND -f ./docker/compose/docker-compose_store_map.yml up -d > /dev/null 2>&1
 
     echo "Monitoring logs for errors..."
 
@@ -46,7 +46,7 @@ while [ $retry_count -lt $MAX_RETRIES ]; do
             success_flag=true
             break  # 偵測到成功，離開 log 監控
         fi
-    done < <($DOCKER_COMPOSE_COMMAND -f ./scripts/docker-compose_store_map.yml logs -f)
+    done < <($DOCKER_COMPOSE_COMMAND -f ./docker/compose/docker-compose_store_map.yml logs -f)
 
     # 如果偵測到成功，則跳出主循環
     if [ "$success_flag" = true ]; then

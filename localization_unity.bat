@@ -1,11 +1,11 @@
 @echo off
 
-docker "compose" "-f" "%CD%\scripts\docker-compose_rplidar_unity.yml" "up" "-d"
-docker "compose" "-f" "%CD%\scripts\docker-compose_localization_unity.yml" "up" "-d"
-docker "compose" "-f" "%CD%\scripts\docker-compose_navigation_unity.yml" "up" "-d"
+docker "compose" "-f" "%CD%\docker\compose\docker-compose_rplidar_unity.yml" "up" "-d"
+docker "compose" "-f" "%CD%\docker\compose\docker-compose_localization_unity.yml" "up" "-d"
+docker "compose" "-f" "%CD%\docker\compose\docker-compose_navigation_unity.yml" "up" "-d"
 trap "cleanup" "SIGINT"
 echo "Listening to docker-compose_navigation_unity.yml logs. Press Ctrl+C to stop..."
-docker "compose" "-f" "%CD%\scripts\docker-compose_navigation_unity.yml" "logs" "-f"
+docker "compose" "-f" "%CD%\docker\compose\docker-compose_navigation_unity.yml" "logs" "-f"
 wait
 
 EXIT /B %ERRORLEVEL%

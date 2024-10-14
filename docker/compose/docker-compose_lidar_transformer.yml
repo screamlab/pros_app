@@ -1,17 +1,11 @@
-version: '3.7'
-
 services:
-  map:
-    image: ghcr.io/otischung/pros_ai_image:latest
+  lidar_tranform:
+    image: registry.screamtrumpet.csie.ncku.edu.tw/screamlab/pros_lidar_transformer:latest
     env_file:
       - .env
-    # environment:
-    #   - ROS_DOMAIN_ID
-    volumes:
-      - ./demo/map/map01:/map
     networks:
       - my_bridge_network
-    command: "ros2 run nav2_map_server map_saver_cli -f /map/map01"
+    command: "ros2 run unity_transformer lidar_tranformer_node"
 
 # This will create a docker bridge network
 # docker network create --driver bridge pros_app_my_bridge_network

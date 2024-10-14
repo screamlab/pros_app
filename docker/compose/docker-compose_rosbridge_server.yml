@@ -1,10 +1,8 @@
 services:
   rosbridge:
-    image: ghcr.io/screamlab/pros_jetson_driver_image:latest
+    image: registry.screamtrumpet.csie.ncku.edu.tw/screamlab/pros_base_image:latest
     env_file:
       - .env
-    environment:
-      - ROS_DOMAIN_ID
     networks:
       - my_bridge_network
     ports:
