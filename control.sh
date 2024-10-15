@@ -12,6 +12,7 @@ scripts=(
     "./camera_astra.sh"
     "./camera_dabai.sh"
     "./rosbridge_server.sh"
+    "./gps.sh"
 )
 
 # Array to keep track of child process IDs
