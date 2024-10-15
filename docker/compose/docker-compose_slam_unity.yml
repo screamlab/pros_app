@@ -1,14 +1,14 @@
 services:
   lidar_tranform:
-    image: registry.screamtrumpet.csie.ncku.edu.tw/screamlab/pros_lidar_transformer:latest
+    image: registry.screamtrumpet.csie.ncku.edu.tw/pros_images/pros_unity_lidar_trans_image:latest
     env_file:
       - .env
     networks:
       - my_bridge_network
-    command: "ros2 run unity_transformer lidar_tranformer_node"
+    command: "ros2 run unity_lidar_transformer lidar_transformer_node"
 
   slam:
-    image: registry.screamtrumpet.csie.ncku.edu.tw/screamlab/pros_jetson_driver_image:latest
+    image: registry.screamtrumpet.csie.ncku.edu.tw/pros_images/pros_jetson_driver_image:latest
     env_file:
       - .env
     volumes:
@@ -20,7 +20,7 @@ services:
     command: "ros2 launch /workspace/demo/slam.xml"
 
   rosbridge:
-    image: registry.screamtrumpet.csie.ncku.edu.tw/screamlab/pros_base_image:latest
+    image: registry.screamtrumpet.csie.ncku.edu.tw/pros_images/pros_base_image:latest
     env_file:
       - .env
     networks:

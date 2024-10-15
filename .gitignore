@@ -1,3 +1,4 @@
 .idea/
+.vs/
 .vscode/
-scripts/demo/map/map01/*
+docker/compose/demo/map/map01/*
