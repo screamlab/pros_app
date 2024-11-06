@@ -20,7 +20,7 @@ services:
     command: "ros2 launch /workspace/demo/slam.xml"
 
   rosbridge:
-    image: registry.screamtrumpet.csie.ncku.edu.tw/pros_images/pros_base_image:latest
+    image: registry.screamtrumpet.csie.ncku.edu.tw/pros_images/pros_jetson_driver_image:latest
     env_file:
       - .env
     networks:
