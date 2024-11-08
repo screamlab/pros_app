@@ -1,0 +1,19 @@
+<launch>
+    <!-- 設置校準板大小和方格尺寸 -->
+    <arg name="size" default="3x6"/>
+    <arg name="square" default="0.026"/>
+
+    <!-- 設置圖像話題和相機名稱 -->
+    <arg name="image_topic" default="/camera/color/image_raw"/>
+    <arg name="camera_name" default="/my_camera"/>
+
+    <!-- 啟動 camera_calibration 節點 -->
+    <node pkg="camera_calibration" exec="cameracalibrator" output="screen" name="cameracalibrator">
+        <arg name="size" value="$(var size)"/>
+        <arg name="square" value="$(var square)"/>
+        <ros-args>
+            <remap from="image" to="$(var image_topic)"/>
+            <param name="camera" value="$(var camera_name)"/>
+        </ros-args>
+    </node>
+</launch>
