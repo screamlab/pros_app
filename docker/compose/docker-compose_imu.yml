@@ -9,19 +9,31 @@ services:
       - "/dev/imu_usb:/dev/imu_usb"
     networks:
       - my_bridge_network
-    command: "ros2 launch /workspace/demo/imu_filter.launch.py"
+    command: "ros2 launch /workspace/demo/imu.launch.py"
   
-  imu_filter:
-    image: registry.screamtrumpet.csie.ncku.edu.tw/pros_images/pros_jetson_driver_image:latest
-    env_file:
-      - .env
-    volumes:
-      - ./demo:/workspace/demo:ro
-    depends_on:
-      - imu
-    networks:
-      - my_bridge_network
-    command: "ros2 launch imu_filter_madgwick imu_filter_component.launch.py"
+  # imu_filter:
+  #   image: registry.screamtrumpet.csie.ncku.edu.tw/pros_images/pros_jetson_driver_image:latest
+  #   env_file:
+  #     - .env
+  #   volumes:
+  #     - ./demo:/workspace/demo:ro
+  #   depends_on:
+  #     - imu
+  #   networks:
+  #     - my_bridge_network
+  #   command: "ros2 launch imu_filter_madgwick imu_filter_component.launch.py"
+  
+  # imu_slam:
+  #   image: registry.screamtrumpet.csie.ncku.edu.tw/pros_images/pros_jetson_driver_image:latest
+  #   env_file:
+  #     - .env
+  #   volumes:
+  #     - ./demo:/workspace/demo:ro
+  #   depends_on:
+  #     - imu_filter
+  #   networks:
+  #     - my_bridge_network
+  #   command: "ros2 launch /workspace/demo/slam_imu.xml"
 
 # This will create a docker bridge network
 # docker network create --driver bridge pros_app_my_bridge_network
