@@ -1,0 +1,31 @@
+services:
+  real_sense:
+    image: registry.screamtrumpet.csie.ncku.edu.tw/screamlab/pros_real_sense
+    env_file:
+      - .env
+    devices:
+      - "/dev/video0:/dev/video0"
+      - "/dev/video1:/dev/video1"
+      - "/dev/video2:/dev/video2"
+      - "/dev/video3:/dev/video3"
+      - "/dev/video4:/dev/video4"
+      - "/dev/video5:/dev/video5"
+    privileged: true
+    networks:
+      - my_bridge_network
+    command:  "ros2 launch realsense2_camera rs_launch.py camera_namespace:=real_sense camera_name:=D455"
+  rosbridge:
+    image: registry.screamtrumpet.csie.ncku.edu.tw/pros_images/pros_base_image:latest
+    env_file:
+      - .env
+    networks:
+      - my_bridge_network
+    ports:
+      - 9090:9090  
+    command: "ros2 launch rosbridge_server rosbridge_websocket_launch.xml"    
+# This will create a docker bridge network
+# docker network create --driver bridge pros_app_my_bridge_network
+# You can see the network by docker network ls
+networks:
+  my_bridge_network:
+    driver: bridge

@@ -1,0 +1,48 @@
+services:
+  real_sense_1:
+    image: registry.screamtrumpet.csie.ncku.edu.tw/screamlab/pros_real_sense
+    env_file:
+      - .env
+    devices:
+      - "/dev/video0:/dev/video0"
+      - "/dev/video1:/dev/video1"
+      - "/dev/video2:/dev/video2"
+      - "/dev/video3:/dev/video3"
+      - "/dev/video4:/dev/video4"
+      - "/dev/video5:/dev/video5"
+    privileged: true
+    
+    networks:
+      - my_bridge_network
+    command:  "ros2 launch realsense2_camera rs_launch.py camera_namespace:=real_sense_1 camera_name:=D455 usb_port_id:=4-1.1.1.1 rgb_camera.color_profile:=1280x720x15 depth_module.depth_profile:=1280x720x15 depth_module.infra_profile:=1280x720x15"
+  real_sense_2:
+    image: registry.screamtrumpet.csie.ncku.edu.tw/screamlab/pros_real_sense
+    env_file:
+      - .env
+    devices:
+      - "/dev/video0:/dev/video0"
+      - "/dev/video1:/dev/video1"
+      - "/dev/video2:/dev/video2"
+      - "/dev/video3:/dev/video3"
+      - "/dev/video4:/dev/video4"
+      - "/dev/video5:/dev/video5"
+    privileged: true
+    depends_on:
+      - real_sense_1
+    networks:
+      - my_bridge_network  
+    command:  "ros2 launch realsense2_camera rs_launch.py camera_namespace:=real_sense_2 camera_name:=D455 usb_port_id:=4-1.3 rgb_camera.color_profile:=1280x720x15 depth_module.depth_profile:=1280x720x15 depth_module.infra_profile:=1280x720x15"
+ 
+  rosbridge:
+    image: registry.screamtrumpet.csie.ncku.edu.tw/pros_images/pros_base_image:latest
+    env_file:
+      - .env
+    networks:
+      - my_bridge_network
+    ports:
+      - 9090:9090  
+    command: "ros2 launch rosbridge_server rosbridge_websocket_launch.xml"
+
+networks:
+  my_bridge_network:
+    driver: bridge
