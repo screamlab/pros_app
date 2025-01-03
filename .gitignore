@@ -2,3 +2,4 @@
 .vs/
 .vscode/
 docker/compose/demo/map/map01/*
+*.tar.gz
