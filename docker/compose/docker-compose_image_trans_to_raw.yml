@@ -1,0 +1,14 @@
+services:
+  image_trans_to_raw:
+    image: registry.screamtrumpet.csie.ncku.edu.tw/pros_images/pros_jetson_driver_image:latest
+    env_file:
+      - .env
+    volumes:
+      - ./demo:/workspace/demo:ro
+    networks:
+      - my_bridge_network
+    command: ros2 run image_transport republish compressed raw --ros-args -r in/compressed:=/camera/image/compressed -r out:=/camera/color/image_raw
+
+networks:
+  my_bridge_network:
+    driver: bridge
