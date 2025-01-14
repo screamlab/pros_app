@@ -1,6 +1,6 @@
 services:
   calibration:
-    image: registry.screamtrumpet.csie.ncku.edu.tw/pros_images/pros_jetson_driver_image:latest
+    image: registry.screamtrumpet.csie.ncku.edu.tw/screamlab/pros_camera_calibration
     env_file:
       - .env
     volumes:

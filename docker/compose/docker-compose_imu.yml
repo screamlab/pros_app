@@ -1,6 +1,6 @@
 services:
   imu:
-    image: registry.screamtrumpet.csie.ncku.edu.tw/pros_images/pros_jetson_driver_image:latest
+    image: registry.screamtrumpet.csie.ncku.edu.tw/screamlab/pros_imu
     env_file:
       - .env
     volumes:
@@ -10,7 +10,7 @@ services:
     networks:
       - my_bridge_network
     command: "ros2 launch /workspace/demo/imu.launch.py"
-  
+
   # imu_filter:
   #   image: registry.screamtrumpet.csie.ncku.edu.tw/pros_images/pros_jetson_driver_image:latest
   #   env_file:
@@ -22,7 +22,7 @@ services:
   #   networks:
   #     - my_bridge_network
   #   command: "ros2 launch imu_filter_madgwick imu_filter_component.launch.py"
-  
+
   # imu_slam:
   #   image: registry.screamtrumpet.csie.ncku.edu.tw/pros_images/pros_jetson_driver_image:latest
   #   env_file:
