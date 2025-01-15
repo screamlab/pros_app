@@ -1,6 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
 import os
 import sys
 import signal
@@ -75,6 +72,39 @@ def signal_handler(sig, frame):
     sys.exit(0)
 
 
+def check_and_pull_docker_image(script_name):
+    """
+    檢查腳本中是否有需要的 Docker 映像，若不存在則執行 docker pull 並顯示進度。
+    """
+    with open(script_name, "r") as script_file:
+        script_content = script_file.read()
+
+    # 提取 docker run 或 docker pull 中的映像名稱
+    images = []
+    for line in script_content.splitlines():
+        if "docker run" in line or "docker pull" in line:
+            parts = line.split()
+            for i, part in enumerate(parts):
+                if part in ["docker", "run", "pull"] and i + 1 < len(parts):
+                    images.append(parts[i + 1])
+
+    for image in images:
+        print(f"[檢查] Docker 映像檔: {image}")
+        result = subprocess.run(
+            ["docker", "images", "-q", image],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+        )
+        if not result.stdout.strip():
+            print(f"[缺失] 映像檔 {image} 不存在，開始拉取...")
+            pull_result = subprocess.run(["docker", "pull", image], text=True)
+            if pull_result.returncode == 0:
+                print(f"[成功] 映像檔 {image} 拉取完成！")
+            else:
+                print(f"[錯誤] 拉取映像檔 {image} 失敗！")
+
+
 def main():
     args = parse_arguments()
     silent = args.silent
@@ -90,7 +120,7 @@ def main():
         print("========== 選單 ==========")
         if sh_scripts:
             for i, script in enumerate(sh_scripts, start=1):
-                print(f"{i}. 執行 {script}")
+                print(f"{i}. 檢查並執行 {script}")
         else:
             print("[警告] 目前沒有任何 .sh 檔案可以執行！")
 
@@ -118,6 +148,7 @@ def main():
             idx = int(choice)
             if 1 <= idx <= len(sh_scripts):
                 script_name = sh_scripts[idx - 1]
+                check_and_pull_docker_image(script_name)  # 檢查並拉取需要的 Docker 映像
                 existing_proc = running_processes.get(script_name)
                 if existing_proc and existing_proc.poll() is None:
                     last_message = (
