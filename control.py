@@ -3,11 +3,12 @@ import sys
 import signal
 import argparse
 import subprocess
+import time
 
 # 用來記錄正在執行的 .sh 腳本 {檔案名稱: Popen物件}
 running_processes = {}
 
-CONTAINER_NAME = "my_app_container"  # 若你有對應的 Docker Container 可以刪除
+CONTAINER_NAME = "my_app_container"  # 若你有對應的 Docker Container，可以修改這裡
 
 
 def parse_arguments():
@@ -29,17 +30,18 @@ def list_sh_scripts():
     return [f for f in os.listdir(".") if f.endswith(".sh")]
 
 
-def remove_container(container_name):
+def stop_all_docker_containers():
     """
-    若有特定容器名稱，就執行 `docker rm -f` 以刪除容器
+    停止所有相關的 Docker 容器
     """
-    if container_name:
-        print(f"[訊息] 嘗試刪除容器: {container_name}")
-        subprocess.run(
-            ["docker", "rm", "-f", container_name],
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL,
-        )
+    print("[訊息] 停止所有相關的 Docker 容器...")
+    subprocess.run(
+        ["docker", "ps", "-q", "--filter", f"name={CONTAINER_NAME}"],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+    )
+    subprocess.run(["docker", "rm", "-f", CONTAINER_NAME], stdout=subprocess.DEVNULL)
 
 
 def stop_all_scripts():
@@ -59,8 +61,8 @@ def stop_all_scripts():
         running_processes.clear()
         print("[訊息] 所有腳本已停止。")
 
-    # (選用) 刪除容器
-    remove_container(CONTAINER_NAME)
+    # 停止所有 Docker 容器
+    stop_all_docker_containers()
 
 
 def signal_handler(sig, frame):
@@ -98,11 +100,22 @@ def check_and_pull_docker_image(script_name):
         )
         if not result.stdout.strip():
             print(f"[缺失] 映像檔 {image} 不存在，開始拉取...")
-            pull_result = subprocess.run(["docker", "pull", image], text=True)
-            if pull_result.returncode == 0:
+            pull_process = subprocess.Popen(
+                ["docker", "pull", image], stdout=sys.stdout, stderr=sys.stderr
+            )
+            try:
+                pull_process.wait()  # 等待拉取完成
+            except KeyboardInterrupt:
+                print("\n[訊息] 拉取過程中偵測到 Ctrl + C，正在取消...")
+                pull_process.terminate()
+                stop_all_docker_containers()
+                sys.exit(1)
+            if pull_process.returncode == 0:
                 print(f"[成功] 映像檔 {image} 拉取完成！")
             else:
                 print(f"[錯誤] 拉取映像檔 {image} 失敗！")
+        else:
+            print(f"[成功] 映像檔 {image} 已存在！")
 
 
 def main():
@@ -125,9 +138,6 @@ def main():
             print("[警告] 目前沒有任何 .sh 檔案可以執行！")
 
         print("-------------------------")
-        print("b. 返回選單 (不終止目前執行的腳本)")
-        print("s. 顯示正在執行的腳本")
-        print("d. 終止並刪除所有正在執行的腳本 (SIGINT)")
         print("q. 結束程式 (並終止所有執行中的腳本, SIGINT)")
         print("=========================")
 
@@ -135,11 +145,9 @@ def main():
             print(f"\n{last_message}\n")
             last_message = ""
 
-        # 這裡用 try/except 捕捉 Ctrl + D (EOF)
         try:
             choice = input("請輸入選擇：").strip().lower()
         except EOFError:
-            # 如果使用者按下 Ctrl + D，就進行跟 Ctrl + C 一樣的動作
             print("\n[訊息] 偵測到 EOF (Ctrl + D)，開始終止所有腳本並退出程式...")
             stop_all_scripts()
             sys.exit(0)
@@ -148,7 +156,7 @@ def main():
             idx = int(choice)
             if 1 <= idx <= len(sh_scripts):
                 script_name = sh_scripts[idx - 1]
-                check_and_pull_docker_image(script_name)  # 檢查並拉取需要的 Docker 映像
+                check_and_pull_docker_image(script_name)
                 existing_proc = running_processes.get(script_name)
                 if existing_proc and existing_proc.poll() is None:
                     last_message = (
@@ -167,25 +175,6 @@ def main():
                     last_message = f"[啟動] {script_name} (PID={p.pid})"
             else:
                 last_message = "[錯誤] 沒有這個選項，請重新輸入。"
-
-        elif choice == "b":
-            last_message = "[返回選單] 不終止任何腳本。"
-
-        elif choice == "s":
-            if running_processes:
-                msg_list = ["[正在執行的腳本]: "]
-                for script_name, proc in running_processes.items():
-                    if proc.poll() is None:
-                        msg_list.append(f" - {script_name} (PID={proc.pid})")
-                    else:
-                        msg_list.append(f" - {script_name} (已結束)")
-                last_message = "\n".join(msg_list)
-            else:
-                last_message = "[訊息] 沒有正在執行的腳本。"
-
-        elif choice == "d":
-            stop_all_scripts()
-            input("[按 Enter 鍵繼續...]")
 
         elif choice == "q":
             stop_all_scripts()
