@@ -2,7 +2,7 @@ import os
 import sys
 import signal
 import subprocess
-import time
+import argparse
 
 # List of shell scripts to choose from
 scripts = [
@@ -198,7 +198,6 @@ def check_and_pull_docker_image(script_name):
 
 
 def main():
-    import argparse
 
     parser = argparse.ArgumentParser(description="A Python menu to run .sh scripts.")
     parser.add_argument(
