@@ -1,6 +1,6 @@
 services:
   lidar_tranform:
-    image: registry.screamtrumpet.csie.ncku.edu.tw/pros_images/pros_unity_lidar_trans_image:latest
+    image: ghcr.io/screamlab/pros_unity_lidar_trans_image:latest
     env_file:
       - .env
     networks:

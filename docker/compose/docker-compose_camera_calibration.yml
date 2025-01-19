@@ -1,6 +1,6 @@
 services:
   calibration:
-    image: registry.screamtrumpet.csie.ncku.edu.tw/screamlab/pros_camera_calibration
+    image: ghcr.io/screamlab/pros_camera_calibration:latest
     env_file:
       - .env
     volumes:

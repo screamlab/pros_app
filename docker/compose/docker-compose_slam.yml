@@ -1,6 +1,6 @@
 services:
   slam:
-    image: registry.screamtrumpet.csie.ncku.edu.tw/pros_images/pros_jetson_driver_image:latest
+    image: ghcr.io/screamlab/pros_jetson_driver_image:0.1.0
     env_file:
       - .env
     volumes:
@@ -10,7 +10,7 @@ services:
     command: "ros2 launch /workspace/demo/slam.xml"
 
   rosbridge:
-    image: registry.screamtrumpet.csie.ncku.edu.tw/pros_images/pros_base_image:latest
+    image: ghcr.io/screamlab/pros_base_image:0.0.2
     env_file:
       - .env
     networks:

@@ -1,6 +1,6 @@
 services:
   rplidar:
-    image: registry.screamtrumpet.csie.ncku.edu.tw/pros_images/pros_jetson_driver_image:latest
+    image: ghcr.io/screamlab/pros_jetson_driver_image:0.1.0
     env_file:
       - .env
     volumes:

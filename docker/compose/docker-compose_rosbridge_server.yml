@@ -1,6 +1,6 @@
 services:
   rosbridge:
-    image: registry.screamtrumpet.csie.ncku.edu.tw/pros_images/pros_base_image:latest
+    image: ghcr.io/screamlab/pros_base_image:0.0.2
     env_file:
       - .env
     networks:
