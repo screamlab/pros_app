@@ -1,5 +1,13 @@
 .idea/
 .vs/
 .vscode/
+__pycache__/
+venv/
 docker/compose/demo/map/map01/*
+*.tar
+*.tar.*
+*.tgz
+*.tbz2
+*.zip
+*.rar
 *.tar.gz
