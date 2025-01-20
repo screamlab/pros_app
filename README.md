@@ -40,9 +40,19 @@ This project contains the following 3 features shown above.
 
 
 ## Get Started
+Auto-download all Docker images.
+```
+python ./docker_download.py
+```
 
 Execute `control.sh` to start.
-
+```
+python ./control.sh
+```
+If you want to silence the message
+```
+python ./control.sh -s
+```
 - Main menu
   - Enter number to execute the script.
   - Enter `s` to show running processes.
@@ -84,7 +94,7 @@ Execute `control.sh` to start.
               |-> store_map.sh			-|
   ```
 
-  
+
 
 ## 設定 USB Rule
 
