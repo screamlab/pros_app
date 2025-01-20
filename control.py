@@ -17,6 +17,7 @@ scripts = [
     "./camera_dabai.sh",
     "./rosbridge_server.sh",
     "./gps.sh",
+    "./camera_calibration_unity.sh",
 ]
 
 

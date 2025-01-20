@@ -8,9 +8,9 @@ services:
     networks:
       - my_bridge_network
     command: "ros2 run pros_gps gps_publish"
-  
+
   rosbridge:
-    image: registry.screamtrumpet.csie.ncku.edu.tw/pros_images/pros_base_image:latest
+    image: ghcr.io/screamlab/pros_base_image:0.0.2
     env_file:
       - .env
     networks:

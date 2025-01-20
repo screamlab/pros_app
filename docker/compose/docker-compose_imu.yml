@@ -1,6 +1,6 @@
 services:
   imu:
-    image: registry.screamtrumpet.csie.ncku.edu.tw/screamlab/pros_imu
+    image: ghcr.io/screamlab/pros_imu:latest
     env_file:
       - .env
     volumes:
